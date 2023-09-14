@@ -1,0 +1,26 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <form id="login-form" method="get" action="j_security_check">
+        <p:growl/>
+        <div class="mb-4">
+            <h:outputLabel class="form-label" value="Username" for="j_username"/>
+            <input type="text" class="form-control" id="j_username" name="j_username" value="#{UserHandle.user.username}" oninput="toggleSubmitLogin()" pt:placeholder="Enter username"/>
+        </div>
+        <br/>
+        <div class="mb-4">
+            <h:outputLabel class="form-label" value="Password" for="j_password"/>
+            <input type="password"  class="form-control" id="j_password" name="j_password" value="#{UserHandle.user.password}" oninput="toggleSubmitLogin()" pt:placeholder="Enter password"/>
+        </div>
+        <br/><br/>
+        <div class="mb-4 flex-display center-content">
+            <button type="submit" id="j_submit" class="btn btn-primary" disabled="true">Sign in</button>
+        </div>
+    </form> 
+    
+</ui:composition>

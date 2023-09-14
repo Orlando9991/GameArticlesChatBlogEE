@@ -1,0 +1,11 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+     
+    
+    <p:dialog id="login-dialog" modal="true" onHide="#{UserHandle.welcomeUserMessage('Welcome again','Ola de novo')}" header="Sign In" widgetVar="signInDlg" width="250" height="auto" dynamic="true" fitViewport="true" draggable="false" showEffect="fade">
+        <ui:include src="/login/login.xhtml"/>
+    </p:dialog>
+    <p:growl id="growl" showDetail="true" sticky="true" />
+</ui:composition>

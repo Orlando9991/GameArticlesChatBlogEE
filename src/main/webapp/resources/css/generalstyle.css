@@ -1,0 +1,96 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 12/09/2023, 19:55:40
+    Author     : orlan
+*/
+
+
+/*Text________________________________*/
+.text4xl{
+    font-size: 2.75rem;
+}
+
+.text3xl{
+    font-size: 2rem;
+}
+
+.text2xl{
+    font-size: 1.5rem;
+}
+
+.red-text{
+    color: red;
+}
+
+.underline-text{
+    text-decoration: underline;
+}
+
+.thicker-text{
+    font-weight: bold;
+}
+
+
+/*Position________________________________*/
+
+.center{
+    margin: 0 auto !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    place-self: center !important;
+}
+
+.center-content{
+    justify-content: center !important;
+}
+
+.flex-space-evenly{
+    justify-content: space-evenly
+}
+
+.block-display{
+    display: block !important;
+}
+
+.flex-display{
+    display: flex !important;
+}
+
+.grid-display{
+    display: grid !important;
+}
+
+.right-side{
+    float: right;
+}
+
+/*Space/Margin_________________________________*/
+
+.margin-right-low{
+    margin-right: 20px;
+}
+
+.margin-left-low{
+    margin-left: 20px;
+}
+
+.margin-top-low{
+    margin-top: 10px;
+}
+
+.padding-big{
+    padding:80px;
+}
+
+.margin-normal{
+    margin: 20px;
+}
+
+.background-white{
+    background: rgba(255, 255, 255, 1);
+}

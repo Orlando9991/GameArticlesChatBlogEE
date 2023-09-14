@@ -1,0 +1,21 @@
+<ui:composition 
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <div class="thicker-text text4xl flex-display center-content">
+        <h:outputText value="#{PostHandle.viewPost.title}" /> 
+    </div>
+    <div class="flex-display center-content">
+        <p:graphicImage alt="image" url="getpostimage?photo=#{PostHandle.viewPost.id}" width="auto" />
+    </div>
+    <div>
+        <h:outputText value="#{PostHandle.viewPost.date}" />  
+        <h:outputText value="#{PostHandle.viewPost.autorId}" />
+    </div>
+    <div>
+        <h:outputText value="#{PostHandle.viewPost.text}" />  
+    </div>
+    
+</ui:composition>

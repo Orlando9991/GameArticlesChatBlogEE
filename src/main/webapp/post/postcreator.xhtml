@@ -1,0 +1,79 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:dialog id="post-creator-dialog" header="New Post" widgetVar="postCreatorDlg" width="auto" height="auto" dynamic="true" fitViewport="true" draggable="false" showEffect="fade">
+        <h:form enctype="multipart/form-data">
+                        
+            <div class="" >
+                <div class="ui-inputgroup-addon">Title</div>
+                <p:inputText 
+                    id="postCreatorTitle"
+                    placeholder="Post title"
+                    required="true" 
+                    requiredMessage="*insert title"
+                    value="#{PostHandle.post.title}"/>
+            </div>
+            <div class="error-messages">
+                <h:message for="postCreatorTitle"/>
+            </div>
+
+            <div class="margin-top-low">
+                <div class="ui-inputgroup-addon">Category</div>
+                <p:selectOneMenu value="#{PostHandle.post.category}">
+                    <f:selectItem itemLabel="Action" itemValue="Action"/>
+                    <f:selectItem itemLabel="Adventure" itemValue="Adventure"/>
+                    <f:selectItem itemLabel="RPG" itemValue="RPG"/>
+                    <f:selectItem itemLabel="Simulation" itemValue="Simulation"/>
+                    <f:selectItem itemLabel="Puzzle" itemValue="Puzzle"/>
+                    <f:selectItem itemLabel="Sports/Racing" itemValue="Sports/Racing"/>
+                </p:selectOneMenu>
+            </div>
+
+            <div class="margin-top-low">
+                <div class="ui-inputgroup-addon">Post image</div>
+                <p:fileUpload
+                    id="postCreatorImage"
+                    fileLimit="1"
+                    multiple="false"
+                    label="Choose a Image"
+                    mode="simple"
+                    skinSimple="true"
+                    sizeLimit="1024288" 
+                    allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                    invalidSizeMessage="Maximum file size allowed is 1 MB"
+                    invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                    value ="#{PostHandle.imgFile}"/>
+            </div>
+
+            <div class="margin-top-low">
+                <div class="ui-inputgroup-addon">Text</div>
+                <p:inputTextarea id="postCreatorText"
+                                 cols="100" 
+                                 rows="15"
+                                 maxlength="10000"
+                                 autoResize="true"
+                                 counter="display"
+                                 counterTemplate="{0} characters remaining"
+                                 required="true" 
+                                 requiredMessage="*insert text"
+                                 value="#{PostHandle.post.text}"/>
+            </div>
+            <div class="right-side margin-right-low">
+                <h:outputText id="display"/>
+            </div>
+            <div class="error-messages">
+                <h:message for="postCreatorText"/>
+            </div>
+            
+            <div class="margin-top-low">
+                <p:commandButton value="Create" ajax="false" update="@form" class="btn btn-primary" action="#{PostHandle.createPost}"/>
+            </div>
+
+        </h:form>   
+    </p:dialog>
+</ui:composition>

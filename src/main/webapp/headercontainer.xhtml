@@ -1,0 +1,53 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div class="header-container">
+        <h:form>
+            <b:navBar fluid="true">
+                <b:navbarLinks>
+                    <b:navLink value="Home"  styleClass="text3xl" iconAwesome="fa-home"  onclick="javascript:setRenderSubMenu(false)"/>
+                    <b:navLink  value="Articles" styleClass="text3xl" icon-awesome="fa-book" onclick="javascript:setRenderSubMenu(true)"/>
+                    <b:navLink  value="News" styleClass="text3xl" icon-awesome="fa-bell-o" onclick="javascript:setRenderSubMenu(false)"/>
+                    <b:navLink  value="ContactUs" styleClass="text3xl" icon-awesome="fa-phone-square"  onclick="javascript:setRenderSubMenu(false)"/>                             
+                </b:navbarLinks>           
+                <b:navbarLinks pull="right" rendered="#{!SessionHandle.logged}">
+                    <div class="login-container">
+                        <p:commandButton  id="signInButton" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
+                        <p:commandButton  id="signUpButton" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
+                    </div>             
+                </b:navbarLinks>
+                <b:navbarLinks pull="right" rendered="#{SessionHandle.logged}">
+                    <div class="user-panel">
+                        <p:avatar icon="pi pi-user" label="#{SessionHandle.userName}"  styleClass="mr-2 avatar"  shape="circle" />
+                        <b:badge styleClass="user-badge" value="#{SessionHandle.userName}"  />
+                        <p:menuButton value="Options" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
+                            <p:menuitem value="Settings"  icon="pi pi-cog"/>
+                            <p:menuitem value="Status"  icon="pi pi-briefcase"/>
+                            <p:divider/>
+                            <p:menuitem value="logout"  icon="pi pi-sign-out" onclick="">
+                                <p:confirm header="Confirmation" message="Are you sure you want to logout?" icon="pi pi-exclamation-triangle"/>
+                            </p:menuitem>
+                        </p:menuButton>
+                    </div>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                        <a class="logout-confirm-yes" href="#{request.contextPath}/logout">Yes</a>
+                        <p:commandLink value="No" styleClass="ui-confirmdialog-no ui-button-flat"/>                      
+                    </p:confirmDialog> 
+                </b:navbarLinks>              
+            </b:navBar>
+        </h:form>   
+    </div>
+
+    <ui:include src="/login/registerdialog.xhtml"/>
+    <ui:include src="/login/logindialog.xhtml"/>
+</ui:composition>
+
+
+
+
+
