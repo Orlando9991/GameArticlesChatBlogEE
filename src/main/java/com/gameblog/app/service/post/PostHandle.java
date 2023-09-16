@@ -8,7 +8,7 @@ import com.gameblog.app.model.Post;
 import com.gameblog.app.model.User;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.service.user.UserFacade;
-import com.gameblog.app.tools.BeanTools;
+import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.tools.ImageByteConverter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -43,7 +43,7 @@ public class PostHandle implements Serializable{
     SessionHandle sessionHandle;
     
     @Inject
-    BeanTools beanTools;
+    GeneralViewTools beanTools;
     
     private UploadedFile imgFile;
     
@@ -139,7 +139,7 @@ public class PostHandle implements Serializable{
     @Transactional
     public void createPost() throws ServletException, IOException{
         User user = (User)(userFacade.findByName(sessionHandle.getUserName()).orElseGet(null));
-        post.setAutorId(user.getId());      
+        post.setUser(user);      
         post.setDate(new Date());
         postFacade.create(post);
         PrimeFaces.current().executeScript("PF('postCreatorDlg').hide();");

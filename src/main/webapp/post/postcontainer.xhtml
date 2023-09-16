@@ -9,7 +9,7 @@
    <div class="card" >
        <p:dataView value="#{PostHandle.getCategoryPostsList()}" var="postContent" rows="6" paginator="true" paginatorPosition="bottom"
                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                   gridIcon="pi pi-th-large" lazy="true" touchable="true" layout="grid"   > 
+                   gridIcon="pi pi-th-large" lazy="true" touchable="true" layout="grid"  > 
            <p:dataViewGridItem>
                <p:card class="post-card grid-display center-content">
                        <div>      
@@ -18,13 +18,13 @@
                        <div class="">
                            <h:outputText class="text3xl thicker-text" value="#{postContent.title}"/>
                            <br/>
-                           <h:outputText class="text2xl" value="#{postContent.autorId}"/>
+                           <h:outputText class="text2xl" value="#{postContent.user.username}"/>
                            <br/>
-                           <h:outputText class="" value="#{postContent.date}"/>
+                           <h:outputText class="" value="#{GeneralViewTools.getFormatedDate(postContent.date,'dd-MMMM-yyyy')}"/>
                            <br/>
                            <h:outputText class="postText" value="#{BeanTools.shortenText(postContent.text,10)}"/>
                        </div>              
-                   <div class="flex-display center-content" >
+                   <div class="flex-display center-content margin-top-low" >
                        <p:commandButton value="Show more" action="#{PostHandle.showPostDialog(postContent)}" update=":post-dialog"></p:commandButton>
                    </div>
                        

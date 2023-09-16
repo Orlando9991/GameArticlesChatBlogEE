@@ -43,9 +43,9 @@
                     label="Choose a Image"
                     mode="simple"
                     skinSimple="true"
-                    sizeLimit="1024288" 
+                    sizeLimit="10024288" 
                     allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                    invalidSizeMessage="Maximum file size allowed is 1 MB"
+                    invalidSizeMessage="Maximum file size allowed is 10 MB"
                     invalidFileMessage="only gif | jpg | jpeg | png is allowed"
                     value ="#{PostHandle.imgFile}"/>
             </div>
@@ -61,7 +61,7 @@
                                  counterTemplate="{0} characters remaining"
                                  required="true" 
                                  requiredMessage="*insert text"
-                                 value="#{PostHandle.post.text}"/>
+                                 value="#{PostHandle.post.text}" />
             </div>
             <div class="right-side margin-right-low">
                 <h:outputText id="display"/>

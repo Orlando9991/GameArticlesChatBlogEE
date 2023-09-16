@@ -6,7 +6,7 @@ package com.gameblog.app.service.user;
 
 import com.gameblog.app.model.User;
 import com.gameblog.app.service.session.SessionHandle;
-import com.gameblog.app.tools.BeanTools;
+import com.gameblog.app.tools.GeneralViewTools;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -26,7 +26,7 @@ public class UserHandle implements Serializable{
     UserFacade userFacade;
     
     @Inject
-    BeanTools beanTools;
+    GeneralViewTools beanTools;
 
     @Inject
     SessionHandle sessionHandle;

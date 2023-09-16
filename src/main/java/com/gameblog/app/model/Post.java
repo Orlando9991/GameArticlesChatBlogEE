@@ -14,7 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")
     , @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id")
     , @NamedQuery(name = "Post.findByTitle", query = "SELECT p FROM Post p WHERE p.title = :title")
-    , @NamedQuery(name = "Post.findByAutor", query = "SELECT p FROM Post p WHERE p.autor_id = :autor_id")
+    , @NamedQuery(name = "Post.findByAutor", query = "SELECT p FROM Post p WHERE p.user = :autor_id")
     , @NamedQuery(name = "Post.findByDate", query = "SELECT p FROM Post p WHERE p.date = :date")
     , @NamedQuery(name = "Post.findByCategory", query = "SELECT p FROM Post p WHERE p.category = :category")})
 
@@ -51,11 +53,13 @@ public class Post implements Serializable {
     private Long id;
     
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 200)
     private String title;
     
-    @NotNull
-    private Long autor_id;
+    
+    @ManyToOne
+    @JoinColumn(name="autor_id")
+    private User user;
     
     @NotNull
     private String text;
@@ -81,10 +85,10 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Post(Long id, String title, Long autor, Date date, byte[] image, String category) {
+    public Post(Long id, String title, User autor, Date date, byte[] image, String category) {
         this.id = id;
         this.title = title;
-        this.autor_id = autor;
+        this.user = autor;
         this.date = date;
         this.image = image;
         this.category = category;
@@ -106,14 +110,14 @@ public class Post implements Serializable {
         this.title = title;
     }
 
-    public Long getAutorId() {
-        return autor_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setAutorId(Long autor) {
-        this.autor_id = autor;
+    public void setUser(User user) {
+        this.user = user;
     }
-
+    
     public String getText() {
         return text;
     }

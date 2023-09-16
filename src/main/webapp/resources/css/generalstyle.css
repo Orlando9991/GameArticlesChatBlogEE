@@ -33,6 +33,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-weight: bold;
 }
 
+.text-justify{
+    text-align: justify;
+}
+
 
 /*Position________________________________*/
 
@@ -83,8 +87,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 10px;
 }
 
+.margin-bottom-low{
+    margin-top: 10px;
+}
+
 .padding-big{
     padding:80px;
+}
+
+.padding-normal{
+    padding:40px;
 }
 
 .margin-normal{
