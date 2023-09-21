@@ -6,7 +6,6 @@ package com.gameblog.app.tools;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.stream.Stream;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,11 +25,6 @@ public class GeneralViewTools {
             return txt.substring(0,size)+"...";
         }
         return txt;
-    }
-    
-    public String formatText(String text){
-        text = text.replaceAll("\\.",". <p/>");
-        return text;
     }
     
     public String getFormatedDate(Date date,String format){

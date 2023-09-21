@@ -4,10 +4,11 @@
  */
 package com.gameblog.app.service.post;
 
+import com.gameblog.app.repository.PostRepository;
 import com.gameblog.app.model.Post;
 import com.gameblog.app.model.User;
 import com.gameblog.app.service.session.SessionHandle;
-import com.gameblog.app.service.user.UserFacade;
+import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.tools.ImageByteConverter;
 import java.io.IOException;
@@ -34,10 +35,10 @@ import org.primefaces.model.file.UploadedFile;
 public class PostHandle implements Serializable{
     
     @Inject
-    PostFacade postFacade;
+    PostRepository postFacade;
     
     @Inject
-    UserFacade userFacade;
+    UserRepository userFacade;
     
     @Inject
     SessionHandle sessionHandle;

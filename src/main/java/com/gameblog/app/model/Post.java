@@ -50,7 +50,7 @@ public class Post implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     
     @NotNull
     @Size(min = 1, max = 200)
@@ -77,13 +77,8 @@ public class Post implements Serializable {
     private String category;
     
 
-    public Post() {
-        this.id = 0L;
-    }
+    public Post() {}
 
-    public Post(Long id) {
-        this.id = id;
-    }
 
     public Post(Long id, String title, User autor, Date date, byte[] image, String category) {
         this.id = id;
@@ -149,30 +144,6 @@ public class Post implements Serializable {
     public void setCategory(String category) {
         this.category = category.replace("/", "_").toUpperCase();
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Post)) {
-            return false;
-        }
-        Post other = (Post) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.basic.model.Post[ id=" + id + " ]";
-    }
     
 }
+

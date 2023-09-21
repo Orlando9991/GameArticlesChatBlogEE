@@ -42,7 +42,7 @@ public class User implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     
     @NotNull
     @Size(min = 3, max = 40, message="{user}")
@@ -73,7 +73,6 @@ public class User implements Serializable {
     }
 
     public User() {
-        this.id = 0L;
         this.role = Role.USER.toString();
     }
 
@@ -133,32 +132,5 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.basic.model.Users[ id=" + id + " ]";
-    }
-    
-    
+    }   
 }

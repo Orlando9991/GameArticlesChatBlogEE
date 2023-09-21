@@ -38,3 +38,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .ui-button-text.ui-c{
     font-size: 1.75rem;
 }
+
+.ui-growl {
+    position:absolute;
+    top:80% !important;
+    right: 20%;
+    z-index:9999;
+}

@@ -34,7 +34,8 @@
             <p:password class="form-control" id="passForm" value="#{UserHandle.user.password}"
                         required="true"
                         requiredMessage="Insert password"
-                        placeholder="Enter password" />     
+                        placeholder="Enter password"
+                        match="confpassForm"/>     
             <p:message for="passForm" class="error-messages"/>
         </div>  
         <div>
@@ -42,10 +43,7 @@
             <p:password class="form-control" id="confpassForm" 
                         required="true"
                         requiredMessage="Insert password"
-                        validatorMessage="Passwords not match"
-                        placeholder="Reenter password"
-                        match="passForm" />
-            
+                        placeholder="Reenter password"/>      
             <p:message for="confpassForm"   class="error-messages"/>
         </div>
         <br/><br/>

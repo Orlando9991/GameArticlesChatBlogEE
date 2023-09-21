@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.gameblog.app.service;
+package com.gameblog.app.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import javax.validation.Valid;
  * @param <T>
  */
 
-public interface IObjectCRUD <T> {
+public interface IRepository <T> {
     void create(@Valid T obj);
     void update(@Valid T obj);
     Optional<T> findById(Long id);

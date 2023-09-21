@@ -4,6 +4,7 @@
  */
 package com.gameblog.app.service.post;
 
+import com.gameblog.app.repository.PostRepository;
 import com.gameblog.app.model.Post;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PostImageServlet extends HttpServlet {
     
     @Inject
-    PostFacade postFacade;
+    PostRepository postFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

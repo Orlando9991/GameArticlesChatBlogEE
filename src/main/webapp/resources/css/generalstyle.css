@@ -37,7 +37,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: justify;
 }
 
-
 /*Position________________________________*/
 
 .center{
@@ -45,6 +44,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    place-self: center !important;
+}
+
+.horizontal-center{
+    margin: 0 auto !important;
+    position: absolute !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    place-self: center !important;
+}
+
+.vertical-center{
+    margin: 0 auto !important;
+    position: absolute !important;
+    top: 50% !important;
     transform: translate(-50%, -50%) !important;
     place-self: center !important;
 }

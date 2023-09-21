@@ -6,10 +6,10 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:dialog id="post-creator-dialog" header="New Post" widgetVar="postCreatorDlg" width="auto" height="auto" dynamic="true" fitViewport="true" draggable="false" showEffect="fade">
+    <p:dialog id="post-creator-dialog" responsive="true" onShow="PF('postCreatorDlg').initPosition()" header="New Post" widgetVar="postCreatorDlg" width="auto" height="auto" dynamic="true" fitViewport="true" modal="true" draggable="false" showEffect="fade">
         <h:form enctype="multipart/form-data">
                         
-            <div class="" >
+            <div>
                 <div class="ui-inputgroup-addon">Title</div>
                 <p:inputText 
                     id="postCreatorTitle"
@@ -52,16 +52,17 @@
 
             <div class="margin-top-low">
                 <div class="ui-inputgroup-addon">Text</div>
-                <p:inputTextarea id="postCreatorText"
-                                 cols="100" 
-                                 rows="15"
-                                 maxlength="10000"
-                                 autoResize="true"
-                                 counter="display"
-                                 counterTemplate="{0} characters remaining"
-                                 required="true" 
-                                 requiredMessage="*insert text"
-                                 value="#{PostHandle.post.text}" />
+                <p:textEditor  allowImages="true" 
+                               allowLinks="true" 
+                               allowStyles="true" 
+                               allowFormatting="true"
+                               allowBlocks="true"
+                               height="300px"
+                               placeholder="insert text"
+                               required="true"
+                               requiredMessage="*insert text"
+                               value="#{PostHandle.post.text}"/>
+                
             </div>
             <div class="right-side margin-right-low">
                 <h:outputText id="display"/>
@@ -71,7 +72,9 @@
             </div>
             
             <div class="margin-top-low">
-                <p:commandButton value="Create" ajax="false" update="@form" class="btn btn-primary" action="#{PostHandle.createPost}"/>
+                <p:commandButton value="Create" update="articles-form:category-tab" class="btn btn-primary"  action="#{PostHandle.createPost}">
+                    <f:ajax execute="@form" render="@form"  />
+                </p:commandButton>
             </div>
 
         </h:form>   

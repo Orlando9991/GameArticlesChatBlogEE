@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.gameblog.app.service.post;
+package com.gameblog.app.repository;
 
 import com.gameblog.app.model.Post;
+import com.gameblog.app.repository.IRepository;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -12,14 +13,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
-import com.gameblog.app.service.IObjectCRUD;
 
 /**
  *
  * @author orlan
  */
 @RequestScoped
-public class PostFacade implements IObjectCRUD<Post>{
+public class PostRepository implements IRepository<Post>{
     
     @PersistenceContext(unitName = "gameblogPU")
     private EntityManager em;

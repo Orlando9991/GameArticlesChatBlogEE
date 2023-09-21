@@ -17,8 +17,8 @@
                 </b:navbarLinks>           
                 <b:navbarLinks pull="right" rendered="#{!SessionHandle.logged}">
                     <div class="login-container">
-                        <p:commandButton  id="signInButton" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
-                        <p:commandButton  id="signUpButton" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
+                        <p:commandButton  id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
+                        <p:commandButton  id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
                     </div>             
                 </b:navbarLinks>
                 <b:navbarLinks pull="right" rendered="#{SessionHandle.logged}">

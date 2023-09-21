@@ -4,6 +4,7 @@
  */
 package com.gameblog.app.service.user;
 
+import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.model.User;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.tools.GeneralViewTools;
@@ -23,7 +24,7 @@ import javax.transaction.Transactional;
 public class UserHandle implements Serializable{
     
     @Inject
-    UserFacade userFacade;
+    UserRepository userFacade;
     
     @Inject
     GeneralViewTools beanTools;

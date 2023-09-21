@@ -2,6 +2,7 @@
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:h="http://java.sun.com/jsf/html"
      xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://java.sun.com/jsf/core"
      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <div class="margin-top-low thicker-text text4xl flex-display center-content">
@@ -19,12 +20,30 @@
                 <h:outputText class="margin-right-low" id="autor-post-dialog" value="#{PostHandle.viewPost.user.username} " />
                 
                 <h:outputLabel for="autor-post-dialog" value="Date: "/>
-                <h:outputText id="date-post-dialog" value="#{GeneralViewTools.getFormatedDate(PostHandle.viewPost.date,'dd-MMMM-yyyy')}" />
+                <h:outputText id="date-post-dialog" value="#{GeneralViewTools.getFormatedDate(PostHandle.viewPost.date,'dd-MMMM-yyyy hh-mm-ss')}" />
                 <br/>
                 <br/>
                 <br/>
                 
-                <h:outputText id="text-post-dialog" value="#{GeneralViewTools.formatText(PostHandle.viewPost.text)}" class="text-justify" escape="false" />  
+                <h:outputText id="text-post-dialog" value="#{PostHandle.viewPost.text}" escape="false" />  
+            </div>
+            <div>
+                <p:dataTable id="comments-post-dialog" class="padding-normal" var="comment" value="#{PostCommentsHandle.getAllCommentsByPost(PostHandle.viewPost)}">
+                    <f:facet class="text3xl" name="header">
+                        Comments
+                    </f:facet>
+
+                    <p:column sortBy="#{comment.date}">
+                        <h:outputText class="text2xl thicker-text" value="#{comment.user.username}" />
+                        <br/>
+                        <h:outputText value="#{GeneralViewTools.getFormatedDate(comment.date,'(dd-MM-yyyy)')}" />
+                        <p/><p/><p/><p/>
+                        <h:outputText class="text2xl" value="#{comment.comment}" escape="false" />
+                    </p:column>
+                </p:dataTable>
+                
+                
+                <ui:include src="/comment/comments.xhtml"/>
             </div>
             
         </div>  
