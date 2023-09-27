@@ -45,3 +45,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     right: 20%;
     z-index:9999;
 }
+
+.col-md-12{
+    padding: 0!important;
+}

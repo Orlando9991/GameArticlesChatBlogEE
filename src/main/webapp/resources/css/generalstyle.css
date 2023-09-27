@@ -121,3 +121,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .background-white{
     background: rgba(255, 255, 255, 1);
 }
+
+.background-fade-top{
+  -webkit-mask-image: -webkit-gradient(linear, center top, center bottom,
+      color-stop(0.00,  rgba(0,0,0,0)),
+      color-stop(1.00,  rgba(0,0,0,1)));
+}

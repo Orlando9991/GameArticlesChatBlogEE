@@ -6,8 +6,11 @@ package com.gameblog.app.service.post;
 
 import com.gameblog.app.repository.PostRepository;
 import com.gameblog.app.model.Post;
+import com.gameblog.app.utils.RepositoryException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +27,8 @@ public class PostImageServlet extends HttpServlet {
     
     @Inject
     PostRepository postFacade;
+    
+    private final static Logger logger = Logger.getLogger(PostImageServlet.class.getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,6 +54,8 @@ public class PostImageServlet extends HttpServlet {
             for (int i = 0; i < bytes.length; i++) {
                 out.write(bytes[i]);
             }
+        } catch (RepositoryException e) {
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 

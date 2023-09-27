@@ -7,7 +7,7 @@ package com.gameblog.app.repository;
 import com.gameblog.app.model.Post;
 import com.gameblog.app.model.PostComments;
 import com.gameblog.app.model.User;
-import com.gameblog.app.repository.IRepository;
+import com.gameblog.app.utils.RepositoryException;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -21,33 +21,33 @@ import javax.enterprise.context.RequestScoped;
  * @author orlan
  */
 @RequestScoped
-public class PostCommentsRepository implements IRepository<PostComments>{
+public class PostCommentsRepository implements RepositoryDAO<PostComments>{
 
     @PersistenceContext(unitName = "gameblogPU")
     private EntityManager em;
     
     @Override
-    public void create(@Valid PostComments postComents) {
+    public void create(@Valid PostComments postComents) throws RepositoryException{
         em.persist(postComents);
     }
 
     @Override
-    public void update(@Valid PostComments postComents) {
+    public void update(@Valid PostComments postComents) throws RepositoryException {
         em.merge(postComents);
     }
 
     @Override
-    public Optional<PostComments> findById(Long id) {
+    public Optional<PostComments> findById(Long id) throws RepositoryException {
         return Optional.ofNullable(em.find(PostComments.class, id));
     }
     
-    public Optional<PostComments> findbyUser(User user) {
+    public Optional<PostComments> findbyUser(User user) throws RepositoryException {
         Query findByNameQuery = em.createNamedQuery("PostComments.findByUserId");
         findByNameQuery.setParameter("user_id", user);
         return Optional.ofNullable((PostComments)findByNameQuery.getSingleResult());
     }
     
-    public Optional<List<PostComments>> findbyPost(Post post) {
+    public Optional<List<PostComments>> findbyPost(Post post) throws RepositoryException {
         Query findByNameQuery = em.createNamedQuery("PostComments.findByPostId");
         findByNameQuery.setParameter("post_id", post);
         return Optional.ofNullable((List<PostComments>)findByNameQuery.getResultList());
@@ -55,17 +55,17 @@ public class PostCommentsRepository implements IRepository<PostComments>{
     
     @Deprecated
     @Override
-    public Optional<PostComments> findByName(String value) {
+    public Optional<PostComments> findByName(String value) throws RepositoryException {
        throw new UnsupportedOperationException("Not supported."); 
     }
 
     @Override
-    public void delete(PostComments postComents) {
+    public void delete(PostComments postComents) throws RepositoryException {
         em.remove(postComents);
     }
 
     @Override
-    public List<PostComments> findAll() {
+    public List<PostComments> findAll() throws RepositoryException {
         Query findAllQuery = em.createNamedQuery("PostComments.findAll");
         return (List<PostComments>)findAllQuery.getResultList();
     }

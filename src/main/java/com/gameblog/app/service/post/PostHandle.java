@@ -11,11 +11,16 @@ import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.tools.ImageByteConverter;
+import com.gameblog.app.utils.RepositoryException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
@@ -53,6 +58,8 @@ public class PostHandle implements Serializable{
     private Post viewPost;
     
     private PostTab currentPostTab;
+    
+    private static final Logger logger = Logger.getLogger(PostHandle.class.getName());
     
     public enum PostTab{
         ALL("All"),
@@ -137,14 +144,24 @@ public class PostHandle implements Serializable{
         }
     }
          
-    @Transactional
+    @Transactional(value = Transactional.TxType.REQUIRED,
+                   rollbackOn = {SQLException.class, RepositoryException.class},
+                   dontRollbackOn = {SQLWarning.class})
     public void createPost() throws ServletException, IOException{
+    try {
         User user = (User)(userFacade.findByName(sessionHandle.getUserName()).orElseGet(null));
         post.setUser(user);      
         post.setDate(new Date());
         postFacade.create(post);
         PrimeFaces.current().executeScript("PF('postCreatorDlg').hide();");
         showSucessMessage();
+        } catch (RepositoryException e) {
+            logger.log(Level.WARNING, e.getMessage());        
+        }catch(Exception e){
+            logger.log(Level.WARNING, e.getMessage());
+        }
+        
+        
     }
     
     public void showSucessMessage() {
@@ -152,17 +169,34 @@ public class PostHandle implements Serializable{
         PrimeFaces.current().dialog().showMessageDynamic(message);
     }
 
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    @Transactional(value = Transactional.TxType.REQUIRED,
+                   rollbackOn = {SQLException.class, RepositoryException.class},
+                   dontRollbackOn = {SQLWarning.class})
     public List <Post> allPostsList(){
-        return postFacade.findAll();
+       List<Post> resulList = null;
+       try {
+           resulList = postFacade.findAll();
+       } catch (RepositoryException e) {
+           logger.log(Level.WARNING, e.getMessage());
+       }
+        return resulList;
     }
     
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    @Transactional(value = Transactional.TxType.REQUIRED,
+                   rollbackOn = {SQLException.class, RepositoryException.class},
+                   dontRollbackOn = {SQLWarning.class})
     public List<Post> getCategoryPostsList(){
         if(currentPostTab.name().equals(PostTab.ALL.name())){
             return allPostsList();
+        }else{
+            List<Post> resulList = null;
+            try {
+                resulList = postFacade.findAllByCategory(currentPostTab.toString());
+            } catch (RepositoryException e) {
+                logger.log(Level.WARNING, e.getMessage());
+            }
+            return resulList;
         }
-        return postFacade.findAllByCategory(currentPostTab.toString());
     }
     
     public List<String> getCategoryStringList(){

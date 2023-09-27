@@ -8,7 +8,12 @@ import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.model.User;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.tools.GeneralViewTools;
+import com.gameblog.app.utils.RepositoryException;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
@@ -34,6 +39,8 @@ public class UserHandle implements Serializable{
     
     private User user;
     
+    private static final Logger logger = Logger.getLogger(UserHandle.class.getName());
+    
     public UserHandle(){
         user = new User();
     }
@@ -46,11 +53,20 @@ public class UserHandle implements Serializable{
         this.user = user;
     }
     
-    @Transactional
+    @Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
     public void registUser(){
-        userFacade.create(user);
-        beanTools.executePrimeFacesScript("PF('signUpDlg').hide();");
-        showSucessMessage();
+        
+        try {
+            userFacade.create(user);
+            beanTools.executePrimeFacesScript("PF('signUpDlg').hide();");
+            showSucessMessage();
+        } catch (RepositoryException e) {
+            logger.log(Level.WARNING, e.getMessage());        
+        }catch(Exception e){
+            logger.log(Level.WARNING, e.getMessage());
+        }   
     }
     
     public void welcomeUserMessage(String title, String message){

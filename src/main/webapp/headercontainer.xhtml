@@ -10,10 +10,10 @@
         <h:form>
             <b:navBar fluid="true">
                 <b:navbarLinks>
-                    <b:navLink value="Home"  styleClass="text3xl" iconAwesome="fa-home"  onclick="javascript:setRenderSubMenu(false)"/>
-                    <b:navLink  value="Articles" styleClass="text3xl" icon-awesome="fa-book" onclick="javascript:setRenderSubMenu(true)"/>
-                    <b:navLink  value="News" styleClass="text3xl" icon-awesome="fa-bell-o" onclick="javascript:setRenderSubMenu(false)"/>
-                    <b:navLink  value="ContactUs" styleClass="text3xl" icon-awesome="fa-phone-square"  onclick="javascript:setRenderSubMenu(false)"/>                             
+                    <b:navLink value="Home"  styleClass="text3xl" iconAwesome="fa-home"   onclick="javascript:setActiveRenderSubMenu('home-page')"/>
+                    <b:navLink  value="Articles" styleClass="text3xl" icon-awesome="fa-book" onclick="javascript:setActiveRenderSubMenu('articles-form')"/>
+                    <b:navLink  value="News" styleClass="text3xl" icon-awesome="fa-bell-o" onclick="javascript:setActiveRenderSubMenu('news-page')"/>
+                    <b:navLink  value="ContactUs" styleClass="text3xl" icon-awesome="fa-phone-square"  onclick="javascript:setActiveRenderSubMenu('contact-page')"/>                             
                 </b:navbarLinks>           
                 <b:navbarLinks pull="right" rendered="#{!SessionHandle.logged}">
                     <div class="login-container">

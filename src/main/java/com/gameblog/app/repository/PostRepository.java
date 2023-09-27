@@ -5,7 +5,7 @@
 package com.gameblog.app.repository;
 
 import com.gameblog.app.model.Post;
-import com.gameblog.app.repository.IRepository;
+import com.gameblog.app.utils.RepositoryException;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -13,51 +13,50 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
-
 /**
  *
  * @author orlan
  */
 @RequestScoped
-public class PostRepository implements IRepository<Post>{
+public class PostRepository implements RepositoryDAO<Post>{
     
     @PersistenceContext(unitName = "gameblogPU")
     private EntityManager em;
 
     @Override
-    public void create(@Valid Post post) {
+    public void create(@Valid Post post) throws RepositoryException {
         em.persist(post);
     }
 
     @Override
-    public void update(@Valid Post post) {
+    public void update(@Valid Post post) throws RepositoryException {
         em.merge(post);
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
+    public Optional<Post> findById(Long id) throws RepositoryException {
        return Optional.ofNullable((Post)em.find(Post.class, id));
     }
 
     @Override
-    public Optional<Post> findByName(String title) {
+    public Optional<Post> findByName(String title) throws RepositoryException {
         Query findByNameQuery = em.createNamedQuery("Post.findByTitle");
         findByNameQuery.setParameter("title", title);
         return Optional.ofNullable((Post)findByNameQuery.getSingleResult());
     }
 
     @Override
-    public void delete(Post post) {
+    public void delete(Post post) throws RepositoryException {
         em.remove(post);
     }
 
     @Override
-    public List<Post> findAll() {
+    public List<Post> findAll() throws RepositoryException {
         Query findAllQuery = em.createNamedQuery("Post.findAll");
         return (List<Post>)findAllQuery.getResultList();
     }
     
-    public List<Post> findAllByCategory(String category){
+    public List<Post> findAllByCategory(String category) throws RepositoryException{
         Query findAllCategoryQuery = em.createNamedQuery("Post.findByCategory");
         findAllCategoryQuery.setParameter("category", category);
         return (List<Post>)findAllCategoryQuery.getResultList();

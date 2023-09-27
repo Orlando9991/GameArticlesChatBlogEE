@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputStylesheet library="css" name="primestyle.css"/>
         <h:outputStylesheet library="css" name="generalstyle.css"/>
-        <h:outputScript library="js" name="viewcontrol.js"/>
+        <h:outputScript library="js" name="generalviewcontrol.js"/>
         
         
     </h:head>
@@ -24,6 +24,13 @@
             <b:row>
                 <b:column>
                     <ui:include src="maincontainer.xhtml"/>
+                </b:column>
+            </b:row>
+            <b:row>
+                <b:column>
+                    <div style="background-color: black">
+                        footer
+                    </div>
                 </b:column>
             </b:row>
         </b:container>
