@@ -12,11 +12,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     overflow-y: auto;
     overflow-x: hidden;
     perspective: 10px;  
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .parallax::-webkit-scrollbar{
-    display: none;
+    width: 0;
+    background: transparent;
 }
 
 
@@ -70,7 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .textblock-parallax{
     font-size: 3rem;
-    background-color: activeborder;
+    background-color: rgb(74,132,187);
     padding: 2rem;
     color: whitesmoke
 }

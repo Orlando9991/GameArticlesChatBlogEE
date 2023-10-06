@@ -10,15 +10,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /*Text________________________________*/
 .text4xl{
-    font-size: 2.75rem;
+    font-size: 2.75rem !important;
 }
 
 .text3xl{
-    font-size: 2rem;
+    font-size: 2rem !important;
 }
 
 .text2xl{
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
 }
 
 .red-text{
@@ -37,6 +37,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: justify;
 }
 
+.text-center{
+    text-align: center;
+}
+
 /*Position________________________________*/
 
 .center{
@@ -47,6 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transform: translate(-50%, -50%) !important;
     place-self: center !important;
 }
+
 
 .horizontal-center{
     margin: 0 auto !important;
@@ -88,6 +93,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     float: right;
 }
 
+.position-absolute{
+    position:absolute;
+}
+
 /*Space/Margin_________________________________*/
 
 .margin-right-low{
@@ -114,16 +123,47 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding:40px;
 }
 
+.padding-low{
+    padding:20px;
+}
+
 .margin-normal{
     margin: 20px;
+}
+
+.margin-bottom-normal{
+    margin-top: 40px;
 }
 
 .background-white{
     background: rgba(255, 255, 255, 1);
 }
 
+.background-red{
+    background: rgba(255, 20, 20, 1) !important;
+}
+
 .background-fade-top{
   -webkit-mask-image: -webkit-gradient(linear, center top, center bottom,
       color-stop(0.00,  rgba(0,0,0,0)),
       color-stop(1.00,  rgba(0,0,0,1)));
+}
+
+/*Image*/
+
+.fix-ratio{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: fill;   
+}
+
+/*Structure*/
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    
 }

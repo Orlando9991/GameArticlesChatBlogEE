@@ -10,8 +10,8 @@ package com.gameblog.app.utils;
  */
 public class RepositoryException extends Exception {
 
-    public RepositoryException() {
-        super("Repository exception");
+    public RepositoryException(String message) {
+        super(message);
     }
     
 }

@@ -5,6 +5,7 @@
 package com.gameblog.app.repository;
 
 import com.gameblog.app.model.Post;
+import com.gameblog.app.model.User;
 import com.gameblog.app.utils.RepositoryException;
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +45,16 @@ public class PostRepository implements RepositoryDAO<Post>{
         findByNameQuery.setParameter("title", title);
         return Optional.ofNullable((Post)findByNameQuery.getSingleResult());
     }
+    
+    public List<Post> findByAuthor(User user) throws RepositoryException {
+        Query findByAuthorQuery = em.createNamedQuery("Post.findByAutor");
+        findByAuthorQuery.setParameter("autor_id", user);
+        return findByAuthorQuery.getResultList();
+    }
 
     @Override
     public void delete(Post post) throws RepositoryException {
-        em.remove(post);
+        em.remove(em.merge(post));
     }
 
     @Override
@@ -60,6 +67,5 @@ public class PostRepository implements RepositoryDAO<Post>{
         Query findAllCategoryQuery = em.createNamedQuery("Post.findByCategory");
         findAllCategoryQuery.setParameter("category", category);
         return (List<Post>)findAllCategoryQuery.getResultList();
-    }
-    
+    }    
 }

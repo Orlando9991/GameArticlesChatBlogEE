@@ -41,10 +41,10 @@ public class PostCommentsRepository implements RepositoryDAO<PostComments>{
         return Optional.ofNullable(em.find(PostComments.class, id));
     }
     
-    public Optional<PostComments> findbyUser(User user) throws RepositoryException {
-        Query findByNameQuery = em.createNamedQuery("PostComments.findByUserId");
-        findByNameQuery.setParameter("user_id", user);
-        return Optional.ofNullable((PostComments)findByNameQuery.getSingleResult());
+    public List<PostComments> findbyUser(User user) throws RepositoryException {
+        Query findByUserQuery = em.createNamedQuery("PostComments.findByUserId");
+        findByUserQuery.setParameter("user_id", user);
+        return findByUserQuery.getResultList();
     }
     
     public Optional<List<PostComments>> findbyPost(Post post) throws RepositoryException {

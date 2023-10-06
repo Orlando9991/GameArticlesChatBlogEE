@@ -14,10 +14,12 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 /**
@@ -29,7 +31,7 @@ import javax.transaction.Transactional;
 public class UserHandle implements Serializable{
     
     @Inject
-    UserRepository userFacade;
+    UserRepository userRepository;
     
     @Inject
     GeneralViewTools beanTools;
@@ -39,10 +41,16 @@ public class UserHandle implements Serializable{
     
     private User user;
     
+    @PostConstruct
+    public void init(){
+        user = new User();
+    }
+    
+    
     private static final Logger logger = Logger.getLogger(UserHandle.class.getName());
     
     public UserHandle(){
-        user = new User();
+        
     }
 
     public User getUser() {
@@ -52,6 +60,7 @@ public class UserHandle implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
+   
     
     @Transactional(value = Transactional.TxType.REQUIRED,
             rollbackOn = {SQLException.class, RepositoryException.class},
@@ -59,14 +68,26 @@ public class UserHandle implements Serializable{
     public void registUser(){
         
         try {
-            userFacade.create(user);
+            userRepository.create(user);
             beanTools.executePrimeFacesScript("PF('signUpDlg').hide();");
             showSucessMessage();
-        } catch (RepositoryException e) {
-            logger.log(Level.WARNING, e.getMessage());        
-        }catch(Exception e){
+        } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
-        }   
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+    }
+    
+    public User findUser(String username){
+        try {
+            return userRepository.findByName(username).get();
+        } catch (RepositoryException | NoResultException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return null;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        throw new RuntimeException("Something went wrong. (User not found)");
     }
     
     public void welcomeUserMessage(String title, String message){
@@ -74,9 +95,19 @@ public class UserHandle implements Serializable{
             beanTools.showPopUpMessage("Welcome", "Nice to see you again " + sessionHandle.getUserName(), FacesMessage.SEVERITY_INFO);
         }
     }
-    
+        
     public void showSucessMessage() {
         beanTools.showAlertMessage("Sucess", "Registation Complete", FacesMessage.SEVERITY_INFO);
     }
+    
+    public boolean isCurrentUserAdmin(){
+        try{
+            return findUser(sessionHandle.getUserName()).getRole().equals(User.Role.ADMIN.toString());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return false; 
+    }
+    
     
 }

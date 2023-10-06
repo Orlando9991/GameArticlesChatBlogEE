@@ -1,0 +1,18 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:dialog id="user-settings-dialog"  
+              widgetVar="uSettingsDlg"  
+              height="auto"
+              dynamic="true"
+              responsive="true"
+              onShow="PF('uSettingsDlg').initPosition()"
+              fitViewport="true"
+              draggable="false"
+              showEffect="fade"
+              modal="true">
+        <ui:include src="/useroptions/usersettings.xhtml"/>
+    </p:dialog>
+</ui:composition>

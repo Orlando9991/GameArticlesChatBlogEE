@@ -26,6 +26,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 /**
@@ -42,10 +43,10 @@ public class PostCommentsHandle implements Serializable {
     PostCommentsRepository postCommentsRepo;
 
     @Inject
-    PostRepository postRepo;
+    PostRepository postRepository;
 
     @Inject
-    UserRepository userRepo;
+    UserRepository userRepository;
 
     @Inject
     SessionHandle sessionHandle;
@@ -75,9 +76,9 @@ public class PostCommentsHandle implements Serializable {
 
         try {
             postComments = new PostComments();
-            User user = (User) (userRepo.findByName(sessionHandle.getUserName()).orElseGet(null));
+            User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
             postComments.setUser(user);
-            postComments.setPost(postRepo.findById(post.getId()).get());
+            postComments.setPost(postRepository.findById(post.getId()).get());
             postComments.setDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
             postComments.setComment(commentText);
             postCommentsRepo.create(postComments);
@@ -85,10 +86,10 @@ public class PostCommentsHandle implements Serializable {
             generalViewTools.showPopUpMessage("Comment added",
                     user.getUsername() + "comment: " + generalViewTools.shortenText(commentText, 10),
                     FacesMessage.SEVERITY_INFO);
-        } catch (RepositoryException e) {
-            logger.log(Level.WARNING, e.getMessage());        
-        }catch(Exception e){
+        } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
     }
@@ -102,10 +103,25 @@ public class PostCommentsHandle implements Serializable {
 
         try {
             resultList = postCommentsRepo.findbyPost(post).get();
-        } catch (RepositoryException e) {
+        } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+
+        return resultList;
+    }
+    
+    public List<PostComments> getAllUserComments(){
+        List<PostComments> resultList = null;
+
+        try {
+            User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
+            resultList = postCommentsRepo.findbyUser(user);
+        } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
         return resultList;

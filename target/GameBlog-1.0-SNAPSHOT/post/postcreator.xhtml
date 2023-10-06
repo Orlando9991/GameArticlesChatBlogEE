@@ -72,11 +72,8 @@
             </div>
             
             <div class="margin-top-low">
-                <p:commandButton value="Create" update="articles-form:category-tab" class="btn btn-primary"  action="#{PostHandle.createPost}">
-                    <f:ajax execute="@form" render="@form"  />
-                </p:commandButton>
+                <p:commandButton value="Create" update="articles-form:category-tab" class="btn btn-primary"  action="#{PostHandle.createPost}"/>
             </div>
-
         </h:form>   
     </p:dialog>
 </ui:composition>

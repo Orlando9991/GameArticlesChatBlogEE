@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -57,6 +58,7 @@ public class User implements Serializable {
     
     @NotNull
     @Temporal(TemporalType.DATE)
+    @Past
     private Date dob;
     
     @NotNull
@@ -67,7 +69,7 @@ public class User implements Serializable {
     @NotNull
     private String role;
     
-    static enum Role{
+    public static enum Role{
         ADMIN,
         USER
     }

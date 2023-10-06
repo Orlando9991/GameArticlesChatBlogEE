@@ -4,7 +4,8 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
    <div class="card" >
        <p:dataView value="#{PostHandle.getCategoryPostsList()}" var="postContent" rows="6" paginator="true" paginatorPosition="bottom"
@@ -12,6 +13,16 @@
                    gridIcon="pi pi-th-large" lazy="true" touchable="true" layout="grid"  > 
            <p:dataViewGridItem>
                <p:card class="post-card grid-display center-content">
+                   <c:if test="#{UserHandle.currentUserAdmin}">
+                       <div>         
+                           <p:commandButton 
+                               class="background-red position-absolute"
+                               action="#{PostHandle.removePost(postContent)}"
+                               update="articles-form:category-tab"
+                               icon="pi pi-trash"
+                               value="Remove"/>
+                       </div>
+                   </c:if>     
                        <div>      
                            <p:graphicImage class="post-card-img" alt="image" url="getpostimage?photo=#{postContent.id}" />
                        </div>

@@ -26,8 +26,8 @@
                         <p:avatar icon="pi pi-user" label="#{SessionHandle.userName}"  styleClass="mr-2 avatar"  shape="circle" />
                         <b:badge styleClass="user-badge" value="#{SessionHandle.userName}"  />
                         <p:menuButton value="Options" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
-                            <p:menuitem value="Settings"  icon="pi pi-cog"/>
-                            <p:menuitem value="Status"  icon="pi pi-briefcase"/>
+                            <p:menuitem value="Settings"  icon="pi pi-cog" onclick="PF('uSettingsDlg').show();"/>
+                            <p:menuitem value="Status"  icon="pi pi-briefcase" onclick="PF('uStatusDlg').show();"/>
                             <p:divider/>
                             <p:menuitem value="logout"  icon="pi pi-sign-out" onclick="">
                                 <p:confirm header="Confirmation" message="Are you sure you want to logout?" icon="pi pi-exclamation-triangle"/>
@@ -42,7 +42,8 @@
             </b:navBar>
         </h:form>   
     </div>
-
+    <ui:include src="/useroptions/usersettingsdialog.xhtml"/>
+    <ui:include src="/useroptions/userstatusdialog.xhtml"/>
     <ui:include src="/login/registerdialog.xhtml"/>
     <ui:include src="/login/logindialog.xhtml"/>
 </ui:composition>

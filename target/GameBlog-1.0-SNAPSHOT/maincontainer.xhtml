@@ -12,7 +12,7 @@
             <p:tabView id="category-tab" value="#{PostHandle.getCategoryStringList()}" var="category" effect="fade">
                 <p:ajax event="tabChange" listener="#{PostHandle.setPostCategory}" update="articles-form:category-tab"/>
                 <p:tab title="#{category}" titleStyleClass="text3xl">
-                        <ui:include src="/post/postcontainer.xhtml"/>
+                        <ui:include src="/post/postcardview.xhtml"/>
                 </p:tab>
             </p:tabView>     
         </div>
