@@ -1,7 +1,51 @@
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    olass
+    
+    <div class="card padding-low">
+        
+        <div class="card margin-bottom-normal" >
+            <h:form prependId="false">
+                <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                    <b>User Details</b>
+                </p:divider>
+                <p:panelGrid columns="3" class="padding-low" layout="tabular">
+
+                    <f:facet name="header">
+
+                    </f:facet>
+
+                    <p:outputLabel value="Name:&#160;" class="text3xl red-text" />
+                    <p:outputLabel  class="text3xl" value="#{SessionHandle.userName}" />
+                    <p:commandButton  value="edit"/>
+
+
+                    <p:outputLabel value="Dob:&#160;" class="text3xl red-text" />
+                    <p:outputLabel  class="text3xl" value="#{GeneralViewTools.getFormatedDate(UserHandle.findUser(SessionHandle.userName).getDob(), 'dd-M-yyyy')}" />
+                    <p:commandButton  value="edit"/>
+                    
+                    <p:outputLabel value="Email:&#160;" class="text3xl red-text" />
+                    <p:outputLabel  class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getEmail()}" />
+                    <p:commandButton  value="edit"/>
+                    
+                    <p:outputLabel value="Password&#160;" class="text3xl red-text" />
+                    <p:password id="user-settings-password" disabled="true" class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getPassword()}" toggleMask="true" redisplay="true"/>
+                    <p:commandButton  value="edit"/>
+                    
+                    <p:outputLabel value="Type&#160;" class="text3xl red-text" />
+                    <p:outputLabel  class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getRole()}" />
+                    <p:outputLabel  class="text3xl" value="-" />
+                    
+                </p:panelGrid>   
+            </h:form>
+        </div>
+    </div>
+    
+    
+    
+    
 </ui:composition>

@@ -1,0 +1,22 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:form id="articles-form">
+        <div class="card articles-container">
+            <p:commandButton value="ADD" rendered="#{SessionHandle.logged}" onclick="PF('postCreatorDlg').show();"></p:commandButton>
+            <p:tabView id="category-tab" value="#{PostHandle.getCategoryStringList()}" var="category" effect="fade" dynamic="true" activeIndex="#{param.id}" binding="#{GeneralViewTools.tabView}" >
+                <p:ajax event="tabChange" listener="#{PostHandle.setPostCategory}" update="articles-form:category-tab"/>
+                <p:tab title="#{category}" titleStyleClass="text3xl">
+                    <ui:include src="/post/postcardview.xhtml"/>
+                </p:tab>
+            </p:tabView>     
+        </div>
+    </h:form>
+
+    
+</ui:composition>

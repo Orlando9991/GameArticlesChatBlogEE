@@ -10,7 +10,7 @@
                 <b>Total of Comments</b>
             </p:divider>
             <div class="text-center">
-                <p:outputLabel  class="text4xl red-text margin margin-left-low" value="#{PostCommentsHandle.getAllUserComments().size()}" />
+                <p:outputLabel  class="text4xl red-text margin" value="#{PostCommentsHandle.getAllUserComments().size()}" />
             </div>   
         </div>
     
@@ -19,7 +19,7 @@
                 <b>Total of Posts</b>
             </p:divider>
             <div class="text-center">
-                <p:outputLabel  class="text4xl red-text margin margin-left-low" value="#{PostHandle.getAuthorPostsList().size()}" />
+                <p:outputLabel  class="text4xl red-text margin" value="#{PostHandle.getAuthorPostsList().size()}" />
             </div>  
         </div>
         <c:if test="#{PostHandle.getAuthorPostsList().size()>0}">

@@ -1,0 +1,38 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:form>
+        <div  class="footer" style="background-color: rgba(44,92,157,0.95)">
+        <div class="flex-display flex-space-evenly">
+            <div class="block-display ">
+                <p:commandLink class="white-text text2xl" value="Action Games" action="#{GeneralViewTools.changeTab(1)}"  update="articles-form:category-tab" />
+                <br/>
+                <p:commandLink class="white-text text2xl" value="Adventure Games"   action="#{GeneralViewTools.changeTab(2)}" update="articles-form:category-tab" />
+                <br/>
+                <p:commandLink class="white-text text2xl" value="RPG Games"  action="#{GeneralViewTools.changeTab(3)}" update="articles-form:category-tab" />
+                <br/>
+                <p:commandLink class="white-text text2xl" value="Simulation Games"   action="#{GeneralViewTools.changeTab(4)}" update="articles-form:category-tab" />
+                <br/>
+                <p:commandLink class="white-text text2xl" value="Puzzle Games"  action="#{GeneralViewTools.changeTab(5)}" update="articles-form:category-tab" />
+                <br/>
+                <p:commandLink class="white-text text2xl" value="Sports/Racing Games"  action="#{GeneralViewTools.changeTab(6)}" update="articles-form:category-tab" />
+
+            </div>
+            <div class="block-display " >
+                <p:commandLink class="white-text text2xl" value="News" onclick="setActiveRenderSubMenu('news-page')"/>
+                <br/>
+                <p:commandLink class="white-text text2xl" value="About Us"   onclick="setActiveRenderSubMenu('articles-form')"/>
+                <br/>
+                <p:commandLink class="white-text text2xl" value="Contacts"  onclick="setActiveRenderSubMenu('contact-page')"/>
+            </div>
+        </div>
+    </div>
+        
+    </h:form>
+    
+
+</ui:composition>

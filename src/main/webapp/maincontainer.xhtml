@@ -6,17 +6,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:form id="articles-form">
-        <div class="card articles-container">
-            <p:commandButton value="ADD" rendered="#{SessionHandle.logged}" onclick="PF('postCreatorDlg').show();"></p:commandButton>
-            <p:tabView id="category-tab" value="#{PostHandle.getCategoryStringList()}" var="category" effect="fade">
-                <p:ajax event="tabChange" listener="#{PostHandle.setPostCategory}" update="articles-form:category-tab"/>
-                <p:tab title="#{category}" titleStyleClass="text3xl">
-                        <ui:include src="/post/postcardview.xhtml"/>
-                </p:tab>
-            </p:tabView>     
-        </div>
-    </h:form>
+    <ui:include src="/tabpages/articles.xhtml"/>
     <ui:include src="/tabpages/home.xhtml"/>
     <div id="news-page" class="card">
         new

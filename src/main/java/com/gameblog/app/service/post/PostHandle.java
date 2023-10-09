@@ -95,8 +95,6 @@ public class PostHandle implements Serializable {
         public String getCategory() {
             return this.category;
         }
-    ;
-
     }
     
     
@@ -138,6 +136,15 @@ public class PostHandle implements Serializable {
         post = new Post();
     }
 
+    public PostTab getCurrentPostTab() {
+        return currentPostTab;
+    }
+
+    public void setCurrentPostTab(PostTab currentPostTab) {
+        this.currentPostTab = currentPostTab;
+    }
+
+    
     public void setPostCategory(TabChangeEvent event) {
         String title = event.getTab().getTitle().replaceFirst("/", "_").toUpperCase();
         switch (PostTab.valueOf(title)) {

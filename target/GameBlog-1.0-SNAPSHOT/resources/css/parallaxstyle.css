@@ -7,86 +7,125 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : orlan
 */
 
+
+
 .parallax{
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    perspective: 10px;  
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+   position:relative;
+   display:flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 10;
+   transform-style: flat;
 }
 
-.parallax::-webkit-scrollbar{
-    width: 0;
-    background: transparent;
+.parallax img{
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none;
 }
 
-
-.header-parallax{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    transform-style: preserve-3d;
-    z-index: -1;
+.parallax .title{
+   position: absolute;
+   font-size: 5rem;
+   text-align: justify;
+   letter-spacing: 3px;
+   color: white;
+   text-shadow: 0 1px 10px rgba(30,30,30,0.95);
+   top: 10%;
+   z-index: 20;
 }
 
-.background-z, .foreground-z{
+.parallax img#characters, img#mario, img#floor{
+    z-index: 19;
+}
+
+.parallax img#characters{
+    animation-name: down-to-up;
+    animation-duration: 2s
+    
+}
+
+.parallax img#mario{
+    animation-name: left-to-center;
+    animation-duration: 2s  
+}
+
+.parallax img#floor, img#platform, img#mountain, img#mountain2 {
+    bottom: 0%;
+}
+
+.parallax img#mountain, img#mountain2 {
+    z-index: 16;
+}
+
+.parallax img#mountain {
+    animation-name: down-to-up-low;
+    animation-duration: 3s
+}
+
+.parallax img#mountain2 {
+    animation-name: up-to-down;
+    animation-duration: 2s
+}
+
+.parallax img#platform{
+    z-index: 18;
+    animation-name: down-to-up-low;
+    animation-duration: 2s
+}
+
+.parallax #begin-form{
     position: absolute;
-    max-height: 100%;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-    z-index: -1;
+    bottom: 10%;
+    z-index: 21;
 }
 
-
-
-.foreground-z{
-    position: fixed;
-     bottom:-300px;
-}
-
-.top-move{
-    top:0%
-}
-
-.bottom-move{
-    bottom:0%
-}
-
-.title-parallax{
-    display: flex;
-    font-size: 20rem !important;
+.parallax #initiate{
+    border-radius: 50%;
+    padding: 20px;
+    box-shadow: 0 10px 10px 0 black;
+    background-color: rgba(14,62,97,0.95);
     color: white;
-    text-shadow: 0 0 5px black;
-    z-index: -1;
-    position: fixed;
-    width: 100%;
-    transform: translateZ(-10px) scale(2);
-    justify-content: center;
-    align-items: center;
+    font-size: 7rem;
+    text-shadow: 0 6px 5px rgba(20,20,20,0.95);
+    transition: font-size;
+    transition-duration: 1s;
+    text-decoration: none;
 }
 
-.textblock-parallax{
-    font-size: 3rem;
-    background-color: rgb(74,132,187);
-    padding: 2rem;
-    color: whitesmoke
+.parallax #initiate:hover{
+    background-color: rgba(44,92,157,0.95);
+    font-size: 9rem;
+}
+
+.parallax img#arrow{
+    position: absolute;
+    top: 45%;
+    z-index: 20;
 }
 
 
-.background-z{
-    transform: translateZ(-10px) scale(2);
-
+section{
+    min-height: 100vh;
 }
 
-.foreground-z{
-    transform: translateZ(-5px) scale(1.5);
+
+@keyframes down-to-up {
+    from {transform: translateY(80%);} 
+    to{transform: translateY(0%);} 
 }
 
-.parallax-faraway{
-    transform: translateZ(-4px) scale(1.4);
+@keyframes up-to-down {
+    from {transform: translateY(-5%);} 
+    to{transform: translateY(0%);} 
+}
+
+@keyframes left-to-center {
+    from {transform: translateX(-50%);} 
+    to{transform: translateX(0%);} 
+}
+
+@keyframes down-to-up-low {
+    from {transform: translateY(20%);} 
+    to{transform: translateY(0%);} 
 }

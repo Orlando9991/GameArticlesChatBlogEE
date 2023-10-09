@@ -5,57 +5,25 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:outputStylesheet library="css" name="primestyle.css"/>
-    <h:outputStylesheet library="css" name="generalstyle.css"/>
-    <h:outputStylesheet library="css" name="parallaxstyle.css"/>
-    <h:outputStylesheet library="css" name="style.css"/>
-    <h:outputScript library="js" name="homeviewcontrol.js"/>
-    
-    <div id="home-page" class="card parallax">
-        <div class="header-parallax">
-            <p:graphicImage id="arrow" class="foreground-z" url="#{resource['img/downarrow.gif']}" />
-            <p:graphicImage id="clouds" class="background-z background-fade-top fix-ratio" url="#{resource['img/clouds.jpg']}"  />
-            <p:graphicImage id="mountainflip" class="background-z  fix-ratio" url="#{resource['img/b2.png']}" />
+    <h:outputScript library="js" name="generalviewcontrol.js"/>
 
-                    
-            
-            <div class="title-parallax top-move">
-                <h1 class="background-z top-move">GAME BLOG</h1>
-            </div>
-            <div class="foreground-z flex-display center-content">
-                <p:graphicImage id="mario" class=" fix-ratio" url="#{resource['img/mario.png']}" />
-                <p:graphicImage id="crashbandicoot" class=" fix-ratio" url="#{resource['img/crashbandicoot.png']}" />
-            </div>
-            
-        </div>
-        <section class="textblock-parallax">
-            <h1>WELCOME TO GAME BLOG</h1> 
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    <div id="home-page">
+                
+        <section class="parallax">
+            <h1 id="title" name="title" class="title">GAME BLOG</h1>
+            <p:graphicImage id="clouds" class="background-fade-top" url="#{resource['img/clouds.jpg']}" alt="clouds"  /> 
+            <p:graphicImage id="characters" class="fix-ratio" url="#{resource['img/characters.png']}" />
+            <p:graphicImage id="arrow" class="fix-ratio" url="#{resource['img/downarrow.gif']}"  />
+            <p:graphicImage id="mario" class="fix-ratio" url="#{resource['img/mario.png']}" />
+            <p:graphicImage id="mountain" class="fix-ratio" url="#{resource['img/mountain_flip.png']}" />
+            <p:graphicImage id="mountain2" class="fix-ratio" url="#{resource['img/mountain.png']}" /> 
+            <p:graphicImage id="floor" width="100%" height="auto" url="#{resource['img/floor.png']}" />
+            <p:graphicImage id="platform" width="100%" height="auto" url="#{resource['img/platform.png']}" />
+            <h:form id="begin-form" prependId="false">
+                 <p:commandLink id="initiate"  class="hidden"   value="START" action="#{GeneralViewTools.changeTab(0)}" />
+            </h:form>
         </section>
-            
+        
     </div>
+    
 </ui:composition>

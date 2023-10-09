@@ -25,6 +25,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: red;
 }
 
+.white-text{
+    color: white !important;
+}
+
 .underline-text{
     text-decoration: underline;
 }
@@ -155,15 +159,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     max-width: 100%;
     max-height: 100%;
     display: block;
-    object-fit: fill;   
+    object-fit: cover !important;   
 }
 
 /*Structure*/
 
 .footer{
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
-    
+    padding: 20px;
+    z-index: 30;
 }
+
