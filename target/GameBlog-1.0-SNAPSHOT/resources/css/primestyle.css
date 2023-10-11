@@ -39,6 +39,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 1.75rem;
 }
 
+#user-settings-panel ui-panelgrid td {
+  margin: 5px ;
+}
+
+.ui-panelgrid .ui-panelgrid-cell{
+    padding: 0 !important;
+}
+
 .ui-growl {
     position:absolute;
     top:80% !important;

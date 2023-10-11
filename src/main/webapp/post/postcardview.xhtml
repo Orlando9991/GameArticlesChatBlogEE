@@ -16,11 +16,17 @@
                    <c:if test="#{UserHandle.currentUserAdmin}">
                        <div>         
                            <p:commandButton 
-                               class="background-red position-absolute"
+                               class="ui-button-danger position-absolute"
                                action="#{PostHandle.removePost(postContent)}"
                                update="articles-form:category-tab"
                                icon="pi pi-trash"
-                               value="Remove"/>
+                               value="Remove">
+                           <p:confirm header="Confirmation" message="Are you sure you want to remove this Post?" icon="pi pi-exclamation-triangle"/>
+                           </p:commandButton>
+                           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                            </p:confirmDialog> 
                        </div>
                    </c:if>     
                        <div>      

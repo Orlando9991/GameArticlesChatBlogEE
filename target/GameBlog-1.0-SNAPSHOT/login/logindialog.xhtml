@@ -6,7 +6,7 @@
     
     <p:dialog id="login-dialog" 
               modal="true"
-              onHide="#{UserHandle.welcomeUserMessage('Welcome again','Ola de novo')}"
+              onHide="#{UserHandle.welcomeUserMessage('Welcome again','Ola de novo'); UserHandle.setUserByCurrentSection() }"
               header="Sign In" widgetVar="signInDlg"
               width="250"
               height="auto"

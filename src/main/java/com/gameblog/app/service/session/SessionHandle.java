@@ -4,10 +4,12 @@
  */
 package com.gameblog.app.service.session;
 
+import com.gameblog.app.service.user.UserHandle;
 import java.security.Principal;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 @Named("SessionHandle")
 @RequestScoped
 public class SessionHandle{
+    
+    @Inject
+    UserHandle userHandle;
         
     public boolean isLogged(){
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -30,8 +35,14 @@ public class SessionHandle{
     }
     
     public String getUserName(){
-        Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-        return (p != null)? p.getName():"Not-Found";
+        if(isLogged()){
+            if(userHandle.getUser()!=null && userHandle.getUser().getUsername()!=null){
+                return userHandle.getUser().getUsername();
+            }
+            Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+            return userHandle.findUser(p.getName()).getUsername();  
+        }
+        return "";
     }
 
     

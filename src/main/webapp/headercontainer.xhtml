@@ -7,7 +7,7 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <div class="header-container">
-        <h:form>
+        <h:form id="header-form">
             <b:navBar fluid="true">
                 <b:navbarLinks>
                     <b:navLink value="Home"  styleClass="text3xl" iconAwesome="fa-home"   onclick="javascript:setActiveRenderSubMenu('home-page')"/>
@@ -29,15 +29,16 @@
                             <p:menuitem value="Settings"  icon="pi pi-cog" onclick="PF('uSettingsDlg').show();"/>
                             <p:menuitem value="Status"  icon="pi pi-briefcase" onclick="PF('uStatusDlg').show();"/>
                             <p:divider/>
-                            <p:menuitem value="logout"  icon="pi pi-sign-out" onclick="">
+                            <p:menuitem value="logout"  icon="pi pi-sign-out" action="#{GeneralViewTools.redirectPage('/GameBlog/logout')}">
                                 <p:confirm header="Confirmation" message="Are you sure you want to logout?" icon="pi pi-exclamation-triangle"/>
                             </p:menuitem>
                         </p:menuButton>
                     </div>
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                        <a class="logout-confirm-yes" href="#{request.contextPath}/logout">Yes</a>
-                        <p:commandLink value="No" styleClass="ui-confirmdialog-no ui-button-flat"/>                      
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
                     </p:confirmDialog> 
+                                       
                 </b:navbarLinks>              
             </b:navBar>
         </h:form>   

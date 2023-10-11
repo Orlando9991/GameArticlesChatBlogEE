@@ -11,21 +11,21 @@
         <div>
             <h:outputLabel class="form-label" value="Username" for="nameForm"/>
             <h:inputText  class="form-control" id="nameForm" value="#{UserHandle.user.username}" validator="#{UserValidator.validate}" 
-                          required="true" requiredMessage="Insert name"  pt:placeholder="Enter username"/>   
+                          required="true" requiredMessage="Insert name" autocomplete="on"  pt:placeholder="Enter username"/>   
             <p:message for="nameForm" class="error-messages"/>
         </div>
         <div>
             <h:outputLabel class="form-label" value="Date of Birth" for="dateForm"/>
             <br/>
-            <p:datePicker id="dateForm" value="#{UserHandle.user.dob}" monthNavigator="true" yearNavigator="true" flex="true" maxdate="1-1-2015" mindate="1-1-1924"
-                          required="true" requiredMessage="Insert date"/>
+            <p:datePicker id="dateForm" value="#{UserHandle.user.dob}" monthNavigator="true" pattern="dd-MM-yyyy" yearNavigator="true" flex="true" maxdate="1-1-2015" mindate="1-1-1924"
+                          required="true" autocomplete="on" requiredMessage="Insert date" validator="#{DateValidator.validate}"/>
             <p:message for="dateForm" class="error-messages" />
         </div>
         <br/>
         <div>
             <h:outputLabel class="form-label" value="Email address" for="emailForm"/>
             <h:inputText class="form-control" id="emailForm" value="#{UserHandle.user.email}" validator="#{UserValidator.validate}"
-                         required="true" requiredMessage="Insert email" pt:placeholder="Enter email"/>
+                         required="true" autocomplete="on" requiredMessage="Insert email" pt:placeholder="Enter email"/>
             <p:message for="emailForm" class="error-messages" />
         </div>
         <br/>
@@ -33,6 +33,7 @@
             <h:outputLabel class="form-label" value="Password" for="passForm"/>
             <p:password class="form-control" id="passForm" value="#{UserHandle.user.password}"
                         required="true"
+                        autocomplete="on"
                         requiredMessage="Insert password"
                         placeholder="Enter password"
                         match="confpassForm"/>     
@@ -42,6 +43,7 @@
             <h:outputLabel class="form-label" value="Confirm password" for="passForm"/>
             <p:password class="form-control" id="confpassForm" 
                         required="true"
+                        autocomplete="on"
                         requiredMessage="Insert password"
                         placeholder="Reenter password"/>      
             <p:message for="confpassForm"   class="error-messages"/>

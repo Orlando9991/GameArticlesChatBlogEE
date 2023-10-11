@@ -46,14 +46,14 @@ public class User implements Serializable {
     private long id;
     
     @NotNull
-    @Size(min = 3, max = 40, message="{user}")
+    @Size(min = 3, max = 40, message="Username requires min 3 characters")
     private String username;
     
     @NotNull
     @PasswordConstraint(
             pattern = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])((?=.*\\W)|(?=.*_))^[^ ]+$",
             size = 6,
-            message = "*Password requires at least one: (lower, capital, symbol, digit) character and min length of 6")
+            message = "Password requires at least one: (lower, capital, symbol, digit) character and min length of 6")
     private String password;
     
     @NotNull

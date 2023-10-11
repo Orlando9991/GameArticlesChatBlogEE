@@ -1,9 +1,11 @@
 com\gameblog\app\service\session\SessionHandle.class
 com\gameblog\app\utils\RepositoryException.class
 com\gameblog\app\validator\UserValidator.class
+com\gameblog\app\validator\DateValidator.class
 com\gameblog\app\service\post\PostHandle$3.class
 com\gameblog\app\model\User$Role.class
 com\gameblog\app\model\User.class
+com\gameblog\app\service\contact\ContactFormHandle.class
 com\gameblog\app\service\post\PostImageServlet.class
 com\gameblog\app\repository\PostCommentsRepository.class
 com\gameblog\app\service\session\Logout.class

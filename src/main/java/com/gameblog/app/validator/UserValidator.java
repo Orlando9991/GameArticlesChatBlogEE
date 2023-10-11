@@ -40,7 +40,7 @@ public class UserValidator implements Validator{
         }
         
         if(exists){
-            throw  new ValidatorException(new FacesMessage("User allready exists"));
+            throw  new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"","User allready exists"));
         }
     }
     

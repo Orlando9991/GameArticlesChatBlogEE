@@ -22,7 +22,7 @@ body{
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-
+    background: url("#{resource['img:backgroung.jpg']}");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -49,14 +49,6 @@ body{
 #clouds{
     width: 100%;
     height: 100%    
-}
-
-#user-settings-password_mask{
-    display: none;
-}
-
-#user-settings-password{
-    border: 1px solid #ced4da00!important;
 }
 
 .articles-container{
@@ -99,7 +91,7 @@ body{
     color:#fff;
 }
 
-.logout-confirm-yes{
+.confirm-yes{
     margin-right: 20px;
 }
 

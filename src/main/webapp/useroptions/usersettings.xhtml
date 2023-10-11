@@ -1,6 +1,7 @@
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
@@ -8,39 +9,107 @@
     
     <div class="card padding-low">
         
-        <div class="card margin-bottom-normal" >
+        <div class="card margin-bottom-normal"  >
             <h:form prependId="false">
-                <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                
+                <p:divider class="text2xl thicker-text" align="center" type="dashed">
                     <b>User Details</b>
                 </p:divider>
-                <p:panelGrid columns="3" class="padding-low" layout="tabular">
-
-                    <f:facet name="header">
-
-                    </f:facet>
-
-                    <p:outputLabel value="Name:&#160;" class="text3xl red-text" />
-                    <p:outputLabel  class="text3xl" value="#{SessionHandle.userName}" />
-                    <p:commandButton  value="edit"/>
-
-
-                    <p:outputLabel value="Dob:&#160;" class="text3xl red-text" />
-                    <p:outputLabel  class="text3xl" value="#{GeneralViewTools.getFormatedDate(UserHandle.findUser(SessionHandle.userName).getDob(), 'dd-M-yyyy')}" />
-                    <p:commandButton  value="edit"/>
+                
+                <p:commandButton icon="pi pi-file-edit"
+                                 class="right-side"
+                                 value="Edit"
+                                 immediate="true"
+                                 update="@form"
+                                 rendered="#{UserHandle.disableEditSettings}"
+                                 action="#{UserHandle.setDisableEditSettings(false)}"/>
+                
+                <p:commandButton value="Cancel"
+                                 icon="pi pi-times"
+                                 class="margin-left-low ui-button-danger right-side"
+                                 rendered="#{!UserHandle.disableEditSettings}"
+                                 update="@form"
+                                 action="#{UserHandle.setDisableEditSettings(true)}" immediate="true"/>
+                
+                <p:panelGrid id="user-settings-panel" columns="3" class="padding-low" layout="flex" >
                     
-                    <p:outputLabel value="Email:&#160;" class="text3xl red-text" />
-                    <p:outputLabel  class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getEmail()}" />
-                    <p:commandButton  value="edit"/>
+                    <p:outputLabel value="Username" />
+                        <p:inputText id="user-settings-username"
+                                     value="#{UserHandle.user.username}"
+                                 disabled="#{UserHandle.disableEditSettings}"
+                                 validator="#{UserValidator.validate}" 
+                                 required="true"
+                                 requiredMessage="Insert name"
+                                 autocomplete="on"
+                                 pt:placeholder="Enter username" />
+                         <p:message for="user-settings-username" class="error-messages"/>
+
+                    <p:outputLabel value="Dob;" />
+                    <p:datePicker id="user-settings-date"
+                                  value="#{UserHandle.user.dob}"
+                                  disabled="#{UserHandle.disableEditSettings}"
+                                  monthNavigator="true"
+                                  yearNavigator="true"
+                                  maxdate="1-1-2015"
+                                  mindate="1-1-1924"
+                                  flex="true"
+                                  required="true"
+                                  autocomplete="on"
+                                  requiredMessage="Insert date"/>
+                    <p:message for="user-settings-date" class="error-messages"/>
                     
-                    <p:outputLabel value="Password&#160;" class="text3xl red-text" />
-                    <p:password id="user-settings-password" disabled="true" class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getPassword()}" toggleMask="true" redisplay="true"/>
-                    <p:commandButton  value="edit"/>
+                    <p:outputLabel value="Email"/>
+                    <p:inputText id="user-settings-email" 
+                                 value="#{UserHandle.user.email}"
+                                 disabled="#{UserHandle.disableEditSettings}"
+                                 validator="#{UserValidator.validate}"
+                                 required="true"
+                                 requiredMessage="Insert email"
+                                 autocomplete="on"
+                                 pt:placeholder="Enter email"/>
+                    <p:message for="user-settings-email" class="error-messages"/>
                     
-                    <p:outputLabel value="Type&#160;" class="text3xl red-text" />
-                    <p:outputLabel  class="text3xl" value="#{UserHandle.findUser(SessionHandle.userName).getRole()}" />
-                    <p:outputLabel  class="text3xl" value="-" />
+                    <p:outputLabel value="Password" />
+                    <p:password id="user-settings-password" 
+                                class="text2xl"
+                                value="#{UserHandle.user.password}"
+                                disabled="#{UserHandle.disableEditSettings}"
+                                toggleMask="true" 
+                                redisplay="true" 
+                                required="true"
+                                requiredMessage="Insert password"
+                                placeholder="Enter password"/>
+                    <p:message for="user-settings-password" class="error-messages"/>
                     
-                </p:panelGrid>   
+                    <p:outputLabel value="Type" />
+                    <p:inputText value="#{UserHandle.user.role}"
+                                 disabled="true"/>
+                </p:panelGrid>
+                
+                <div class="flex-display center-content margin-top-low">
+                        <div class="block-display">
+                            <p:commandButton icon="pi pi-check"
+                                         class="ui-button-success"
+                                         value="Save"
+                                         update="@form header-form"
+                                         disabled="#{UserHandle.disableEditSettings}"
+                                         action="#{UserHandle.updateUser()}"/>                           
+                        </div>
+                    </div>
+                    <div class="flex-display center-content margin-top-low">
+                        <p:commandButton class="ui-button-danger"
+                                         icon="pi pi-times"
+                                         disabled="#{!UserHandle.disableEditSettings}"
+                                         action="#{UserHandle.removeUser()}"
+                                         value="Remove Account">
+                            <p:confirm  header="Confirmation" message="Are you sure you want to remove your Account?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                        
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                        </p:confirmDialog> 
+                    </div>
             </h:form>
         </div>
     </div>

@@ -6,6 +6,7 @@ package com.gameblog.app.service.user;
 
 import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.model.User;
+import com.gameblog.app.service.post.PostHandle;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.utils.RepositoryException;
@@ -41,9 +42,12 @@ public class UserHandle implements Serializable{
     
     private User user;
     
+    private Boolean disableEditSettings;
+    
     @PostConstruct
     public void init(){
         user = new User();
+        setDisableEditSettings(true);
     }
     
     
@@ -60,6 +64,14 @@ public class UserHandle implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Boolean getDisableEditSettings() {
+        return disableEditSettings;
+    }
+
+    public void setDisableEditSettings(Boolean disableEditSettings) {
+        this.disableEditSettings = disableEditSettings;
+    }
    
     
     @Transactional(value = Transactional.TxType.REQUIRED,
@@ -70,7 +82,7 @@ public class UserHandle implements Serializable{
         try {
             userRepository.create(user);
             beanTools.executePrimeFacesScript("PF('signUpDlg').hide();");
-            showSucessMessage();
+            showRegistSucessMessage();
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
@@ -78,26 +90,63 @@ public class UserHandle implements Serializable{
         }
     }
     
+    @Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
+    public void updateUser(){
+        try {
+            System.out.println(user.getPassword());
+            userRepository.update(user);
+            setDisableEditSettings(true);
+            showUpdateSucessMessage();
+        } catch (RepositoryException | NoResultException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+    }
+    
+    @Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
     public User findUser(String username){
         try {
             return userRepository.findByName(username).get();
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
-            return null;
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
         throw new RuntimeException("Something went wrong. (User not found)");
     }
     
+     @Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
+    public void removeUser(){
+         try {
+            userRepository.delete(findUser(user.getUsername()));
+            beanTools.redirectPage("/GameBlog/logout");
+            beanTools.showAlertMessage("Remove Account","Account remove complete",FacesMessage.SEVERITY_INFO);
+        } catch (RepositoryException | NoResultException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+    }
+    
     public void welcomeUserMessage(String title, String message){
         if(sessionHandle.isLogged()){
-            beanTools.showPopUpMessage("Welcome", "Nice to see you again " + sessionHandle.getUserName(), FacesMessage.SEVERITY_INFO);
+            beanTools.showPopUpMessage("Welcome", "Nice to see you again " + sessionHandle.getUserName(), FacesMessage.SEVERITY_INFO);     
         }
     }
         
-    public void showSucessMessage() {
+    public void showRegistSucessMessage() {
         beanTools.showAlertMessage("Sucess", "Registation Complete", FacesMessage.SEVERITY_INFO);
+    }
+    
+    public void showUpdateSucessMessage() {
+        beanTools.showAlertMessage("Update", "Update complete", FacesMessage.SEVERITY_INFO);
     }
     
     public boolean isCurrentUserAdmin(){
@@ -109,5 +158,9 @@ public class UserHandle implements Serializable{
         return false; 
     }
     
-    
+    public void setUserByCurrentSection(){
+        if(sessionHandle.isLogged()){          
+            this.user = findUser(sessionHandle.getUserName());
+        }
+    }
 }

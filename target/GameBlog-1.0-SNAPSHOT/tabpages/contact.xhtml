@@ -1,0 +1,31 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <h:outputScript library="js" name="generalviewcontrol.js"/>
+
+    <div id="contact-page">
+        <p:card>
+            FELL FREE TO TALK TO US
+            <h:form>
+                
+                <h5>Select the subject</h5>
+                <p:cascadeSelect value="#{ContactFormHandle.selection}" style="min-width: 14rem" placeholder="Select a subject">
+                    <p:ajax event="itemSelect" listener="#{ContactFormHandle.subjectSelected}"/>
+                    <f:selectItems value="#{ContactFormHandle.subjects}"/>
+                </p:cascadeSelect>
+
+                
+            </h:form>
+
+        </p:card>
+
+
+    </div>
+
+</ui:composition>

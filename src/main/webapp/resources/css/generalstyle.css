@@ -98,7 +98,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .position-absolute{
-    position:absolute;
+    position:absolute !important;
 }
 
 /*Space/Margin_________________________________*/
@@ -108,7 +108,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .margin-left-low{
-    margin-left: 20px;
+    margin-left: 20px !important;
 }
 
 .margin-top-low{
@@ -141,10 +141,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .background-white{
     background: rgba(255, 255, 255, 1);
-}
-
-.background-red{
-    background: rgba(255, 20, 20, 1) !important;
 }
 
 .background-fade-top{

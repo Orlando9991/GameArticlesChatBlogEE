@@ -50,7 +50,7 @@ public class UserRepository implements RepositoryDAO<User>,Serializable{
 
     @Override
     public void delete(User user) throws RepositoryException {
-        em.remove(user);
+        em.remove(em.merge(user));
     }
 
     @Override

@@ -5,8 +5,11 @@
 package com.gameblog.app.tools;
 
 import com.gameblog.app.service.post.PostHandle;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -69,6 +72,15 @@ public class GeneralViewTools {
         tabView.setActiveIndex(i);
         postHandle.setCurrentPostTab(PostHandle.PostTab.values()[i]);
         PrimeFaces.current().executeScript("setActiveRenderSubMenu('articles-form')");
+    }
+    
+    public void redirectPage(String url){
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().redirect(url);
+        } catch (IOException ex) {
+            Logger.getLogger(GeneralViewTools.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
         
    
