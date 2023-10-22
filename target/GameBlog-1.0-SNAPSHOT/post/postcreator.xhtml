@@ -12,14 +12,14 @@
             <div>
                 <div class="ui-inputgroup-addon">Title</div>
                 <p:inputText 
-                    id="postCreatorTitle"
+                    id="post-creator-title"
                     placeholder="Post title"
                     required="true" 
-                    requiredMessage="*insert title"
+                    requiredMessage="Insert title"
+                    validator="#{PostValidator.validate}"
                     value="#{PostHandle.post.title}"/>
-            </div>
-            <div class="error-messages">
-                <h:message for="postCreatorTitle"/>
+                <br/>
+                <h:message for="post-creator-title" class="error-messages"/>
             </div>
 
             <div class="margin-top-low">
@@ -37,7 +37,9 @@
             <div class="margin-top-low">
                 <div class="ui-inputgroup-addon">Post image</div>
                 <p:fileUpload
-                    id="postCreatorImage"
+                    id="post-creator-image"
+                    required="true"
+                    requiredMessage="Select a valid message"
                     fileLimit="1"
                     multiple="false"
                     label="Choose a Image"
@@ -48,11 +50,14 @@
                     invalidSizeMessage="Maximum file size allowed is 10 MB"
                     invalidFileMessage="only gif | jpg | jpeg | png is allowed"
                     value ="#{PostHandle.imgFile}"/>
+                <br/>
+                <h:message class="error-messages" for="post-creator-image"/>
             </div>
 
             <div class="margin-top-low">
                 <div class="ui-inputgroup-addon">Text</div>
-                <p:textEditor  allowImages="true" 
+                <p:textEditor  id="post-creator-text"
+                               allowImages="true" 
                                allowLinks="true" 
                                allowStyles="true" 
                                allowFormatting="true"
@@ -60,20 +65,16 @@
                                height="300px"
                                placeholder="insert text"
                                required="true"
-                               requiredMessage="*insert text"
+                               requiredMessage="Insert text"
                                value="#{PostHandle.post.text}"/>
                 
-            </div>
-            <div class="right-side margin-right-low">
-                <h:outputText id="display"/>
-            </div>
-            <div class="error-messages">
-                <h:message for="postCreatorText"/>
+                <h:message class="error-messages" for="post-creator-text"/>
             </div>
             
             <div class="margin-top-low">
-                <p:commandButton value="Create" update="articles-form:category-tab" class="btn btn-primary"  action="#{PostHandle.createPost}"/>
+                <p:commandButton value="Create" update="@form" class="btn btn-primary"  action="#{PostHandle.createPost}"/>
             </div>
         </h:form>   
     </p:dialog>
+    
 </ui:composition>

@@ -9,8 +9,8 @@
     <h:form id="articles-form">
         <div class="card articles-container">
             <p:commandButton value="ADD" rendered="#{SessionHandle.logged}" onclick="PF('postCreatorDlg').show();"></p:commandButton>
-            <p:tabView id="category-tab" value="#{PostHandle.getCategoryStringList()}" var="category" effect="fade" dynamic="true" activeIndex="#{param.id}" binding="#{GeneralViewTools.tabView}" >
-                <p:ajax event="tabChange" listener="#{PostHandle.setPostCategory}" update="articles-form:category-tab"/>
+            <p:tabView id="category-tab" value="#{PostHandle.getCategoryStringList()}" var="category" effect="fade"  dynamic="true" activeIndex="#{param.id}" binding="#{GeneralViewTools.tabView}" >
+                <p:ajax event="tabChange" listener="#{GeneralViewTools.setPostCategory}"/>
                 <p:tab title="#{category}" titleStyleClass="text3xl">
                     <ui:include src="/post/postcardview.xhtml"/>
                 </p:tab>

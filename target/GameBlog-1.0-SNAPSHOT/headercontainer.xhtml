@@ -8,23 +8,26 @@
 
     <div class="header-container">
         <h:form id="header-form">
-            <b:navBar fluid="true">
-                <b:navbarLinks>
-                    <b:navLink value="Home"  styleClass="text3xl" iconAwesome="fa-home"   onclick="javascript:setActiveRenderSubMenu('home-page')"/>
-                    <b:navLink  value="Articles" styleClass="text3xl" icon-awesome="fa-book" onclick="javascript:setActiveRenderSubMenu('articles-form')"/>
-                    <b:navLink  value="News" styleClass="text3xl" icon-awesome="fa-bell-o" onclick="javascript:setActiveRenderSubMenu('news-page')"/>
-                    <b:navLink  value="ContactUs" styleClass="text3xl" icon-awesome="fa-phone-square"  onclick="javascript:setActiveRenderSubMenu('contact-page')"/>                             
-                </b:navbarLinks>           
-                <b:navbarLinks pull="right" rendered="#{!SessionHandle.logged}">
-                    <div class="login-container">
-                        <p:commandButton  id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
-                        <p:commandButton  id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
-                    </div>             
-                </b:navbarLinks>
-                <b:navbarLinks pull="right" rendered="#{SessionHandle.logged}">
+            
+            <p:toolbar >
+                <p:toolbarGroup>
+                    <p:commandLink value="Home" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('home-page')"/>
+                    <p:commandLink value="Articles" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('articles-form')"/>
+                    <p:commandLink value="News" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('news-page')"/>
+                    <p:commandLink value="ContactUs" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('contact-page')"/>                  
+                </p:toolbarGroup>
+                
+                <p:toolbarGroup align="right" rendered="#{!SessionHandle.logged}">
+                        <div class="login-container">
+                            <p:commandButton  id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
+                            <p:commandButton  id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
+                        </div>
+                </p:toolbarGroup>
+                
+                <p:toolbarGroup align="right" rendered="#{SessionHandle.logged}">            
                     <div class="user-panel">
                         <p:avatar icon="pi pi-user" label="#{SessionHandle.userName}"  styleClass="mr-2 avatar"  shape="circle" />
-                        <b:badge styleClass="user-badge" value="#{SessionHandle.userName}"  />
+                        <p:badge class="user-badge" value="#{SessionHandle.userName}" size="xlarge"  />
                         <p:menuButton value="Options" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
                             <p:menuitem value="Settings"  icon="pi pi-cog" onclick="PF('uSettingsDlg').show();"/>
                             <p:menuitem value="Status"  icon="pi pi-briefcase" onclick="PF('uStatusDlg').show();"/>
@@ -34,13 +37,13 @@
                             </p:menuitem>
                         </p:menuButton>
                     </div>
+                    
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
-                    </p:confirmDialog> 
-                                       
-                </b:navbarLinks>              
-            </b:navBar>
+                    </p:confirmDialog>                
+                </p:toolbarGroup>
+            </p:toolbar>
         </h:form>   
     </div>
     <ui:include src="/useroptions/usersettingsdialog.xhtml"/>

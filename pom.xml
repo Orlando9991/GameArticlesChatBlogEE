@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+     
     <dependencies>
         <dependency>
             <groupId>org.glassfish.metro</groupId>
@@ -28,7 +28,12 @@
             <version>2.2</version>
             <scope>provided</scope>
          </dependency>
-        
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -43,10 +48,18 @@
             <scope>compile</scope>
         </dependency>
         
+        
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>13.0.0</version>
+            <version>13.0.1</version>
+            <type>jar</type>
+        </dependency>
+        
+        <dependency>
+             <groupId>com.sun.mail</groupId>
+             <artifactId>javax.mail</artifactId>
+             <version>1.6.2</version>
         </dependency>
         
     </dependencies>

@@ -169,3 +169,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     z-index: 30;
 }
 
+/* link */
+
+.link-animate{
+    text-decoration: none !important;
+    &:focus{
+        box-shadow: 0 10px blue !important;
+    }
+    &:hover{
+        box-shadow: 0 10px 10px blue !important;
+    }
+}

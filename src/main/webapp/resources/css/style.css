@@ -51,6 +51,20 @@ body{
     height: 100%    
 }
 
+#contact-page-main-card, #news-page-main-card{
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#contact-page-title{
+    background-color: #2196f3;
+    color: white;
+}
+
+#user-status-dialog{
+    width: 700px !important;
+}
+
+
 .articles-container{
     margin-top: 30px;
     margin-left: 10%;
@@ -153,6 +167,7 @@ body{
   .post-dialog-image{
     max-width: 1200px;
   }
+  
 }
 
 @media screen and (max-width: 1350px) {
@@ -208,6 +223,10 @@ body{
     width: auto;
     height: auto;
   }
+  
+  #user-status-dialog{
+    width: 600px !important;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -225,6 +244,10 @@ body{
    }
   .post-dialog-image{
        max-width: 450px;
+  }
+  
+  #user-status-dialog{
+    width: 500px !important;
   }
 }
 
@@ -245,6 +268,10 @@ body{
   
   .post-dialog-image{
        max-width: 400px;
+  }
+  
+  #user-status-dialog{
+    width: 450px !important;
   }
 }
 
@@ -276,6 +303,11 @@ body{
   #general-text-post-dialog{
       padding: 3px;
   }
+  
+  #user-status-dialog{
+    width: 350px !important;
+  }
+  
 }
 
 @media screen and (max-width: 400px) {

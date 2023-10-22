@@ -5,40 +5,46 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <div class="card padding-low">
-        <div class="card margin-bottom-normal" >
-            <p:divider class="text3xl thicker-text" align="center" type="dashed">
-                <b>Total of Comments</b>
-            </p:divider>
-            <div class="text-center">
-                <p:outputLabel  class="text4xl red-text margin" value="#{PostCommentsHandle.getAllUserComments().size()}" />
-            </div>   
-        </div>
-    
-        <div class="card">
-            <p:divider class="text3xl thicker-text" align="center" type="dashed">
-                <b>Total of Posts</b>
-            </p:divider>
-            <div class="text-center">
-                <p:outputLabel  class="text4xl red-text margin" value="#{PostHandle.getAuthorPostsList().size()}" />
-            </div>  
-        </div>
-        <c:if test="#{PostHandle.getAuthorPostsList().size()>0}">
-            <div class="card">
-            <p:divider class="text3xl thicker-text" align="center" type="dashed">
-                <b>Category of Posts Created</b>
-            </p:divider>
-                <div class="card">
-                    <p:donutChart model="#{PostHandle.categoryPostNumberGraph}" style="width: 100%; height: 500px;"/>
-                </div>
+        
+        <c:if test="#{SessionHandle.logged}">
+            
+            <div class="card margin-bottom-normal" >
+                <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                    <b>Total of Comments</b>
+                </p:divider>
+                <div class="text-center">
+                    <p:outputLabel  class="text4xl red-text margin" value="#{PostCommentsHandle.getAllUserComments().size()}" />
+                </div>   
             </div>
+
+            <div class="card">
+                <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                    <b>Total of Posts</b>
+                </p:divider>
+                <div class="text-center">
+                    <p:outputLabel  class="text4xl red-text margin" value="#{PostHandle.getAuthorPostsList().size()}" />
+                </div>  
+            </div>
+            <c:if test="#{PostHandle.getAuthorPostsList().size()>0}">
+                <div class="card">
+                    <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                        <b>Category of Posts Created</b>
+                    </p:divider>
+                    <div class="card">
+                        <p:donutChart model="#{PostHandle.categoryPostNumberGraph}" style="width: 100%; height: 500px;"/>
+                    </div>
+                </div>
+            </c:if>
+
+            <div class="card">
+                <p:divider class="text3xl thicker-text" align="center" type="dashed">
+                    <b>Posts created by Month</b>
+                </p:divider>
+                <p:lineChart model="#{PostHandle.postNumberGraph}" style="width: 100%; height: 500px;"/>
+            </div> 
+
         </c:if>
         
-        <div class="card">
-            <p:divider class="text3xl thicker-text" align="center" type="dashed">
-                <b>Posts created by Month</b>
-            </p:divider>
-            <p:lineChart model="#{PostHandle.postNumberGraph}" style="width: 100%; height: 500px;"/>
-        </div> 
     </div>
     
 </ui:composition>

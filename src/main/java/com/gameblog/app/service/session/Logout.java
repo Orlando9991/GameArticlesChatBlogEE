@@ -5,9 +5,13 @@
 package com.gameblog.app.service.session;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,12 +36,29 @@ public class Logout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session= request.getSession();
-        session.invalidate();
-               
+        try {
+            //remove cookie from JSESSIONID to prevent 
+            //active logging state when refreshing browser after logout.
+            Cookie [] cookies = request.getCookies();
+            for (Cookie c : cookies) {
+                if(c.getName().equals("JSESSIONID")){
+                    c.setMaxAge(0);
+                    response.addCookie(c);
+                    break;
+                }
+            }
+
+            HttpSession session= request.getSession();
+            session.invalidate();
+
+            RequestDispatcher rd = request.getRequestDispatcher("/index.xhtml");
+            rd.forward(request,response);
+            
+        } catch (Exception e) {
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, "Session not found, redirecting to index.xhtml");
+            response.sendRedirect("/GameBlog/index.xhtml");
+        }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/index.xhtml");
-        rd.forward(request,response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

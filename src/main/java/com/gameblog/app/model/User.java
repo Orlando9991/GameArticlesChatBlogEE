@@ -46,7 +46,7 @@ public class User implements Serializable {
     private long id;
     
     @NotNull
-    @Size(min = 3, max = 40, message="Username requires min 3 characters")
+    @Size(min = 3, max = 40, message="{errors.firstName.size}")
     private String username;
     
     @NotNull

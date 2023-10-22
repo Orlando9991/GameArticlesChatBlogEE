@@ -11,6 +11,7 @@ package com.gameblog.app.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import static javax.persistence.CascadeType.REMOVE;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

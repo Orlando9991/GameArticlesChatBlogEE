@@ -7,6 +7,7 @@ package com.gameblog.app.repository;
 import com.gameblog.app.model.Post;
 import com.gameblog.app.model.User;
 import com.gameblog.app.utils.RepositoryException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -66,6 +67,12 @@ public class PostRepository implements RepositoryDAO<Post>{
     public List<Post> findAllByCategory(String category) throws RepositoryException{
         Query findAllCategoryQuery = em.createNamedQuery("Post.findByCategory");
         findAllCategoryQuery.setParameter("category", category);
+        return (List<Post>)findAllCategoryQuery.getResultList();
+    }
+
+    public List<Post> findAllByDate(Date date) throws RepositoryException{
+        Query findAllCategoryQuery = em.createNamedQuery("Post.findByDate");
+        findAllCategoryQuery.setParameter("date", date);
         return (List<Post>)findAllCategoryQuery.getResultList();
     }    
 }

@@ -3,29 +3,101 @@
     xmlns:b="http://bootsfaces.net/ui"
     xmlns:p="http://primefaces.org/ui"
     xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:botDetect="https://captcha.com/java/jsf"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:outputScript library="js" name="generalviewcontrol.js"/>
-
-    <div id="contact-page">
-        <p:card>
-            FELL FREE TO TALK TO US
+    
+    <div id="contact-page" class="margin-normal padding-normal ">
+        <p:card id="contact-page-main-card" class="flex-display center-content">
+            
+            <p:card id="contact-page-sub-card" class="padding-normal">
+                <p:card id="contact-page-title" class="text-center">
+                    <h4>FELL FREE TO TALK TO US</h4>
+                </p:card>
+                
             <h:form>
+                <div class="margin-normal">
+                    <h5 class="thicker-text">Subject</h5>
+                    <p:cascadeSelect id="contact-subject"
+                                     value="#{ContactSubjectHandle.selection}"
+                                     placeholder="Select a subject"
+                                     required="true"                                    
+                                     requiredMessage="Select one subject">
+                        <p:ajax event="itemSelect" listener="#{ContactSubjectHandle.subjectSelected}"/>                       
+                        <f:selectItems id="contact-subject-item" value="#{ContactSubjectHandle.subjects}"  />
+                    <br/>
+                    <h:message for="contact-subject" class="error-messages"/>
+                    </p:cascadeSelect>
+                </div>
                 
-                <h5>Select the subject</h5>
-                <p:cascadeSelect value="#{ContactFormHandle.selection}" style="min-width: 14rem" placeholder="Select a subject">
-                    <p:ajax event="itemSelect" listener="#{ContactFormHandle.subjectSelected}"/>
-                    <f:selectItems value="#{ContactFormHandle.subjects}"/>
-                </p:cascadeSelect>
-
+                <div class="margin-normal">
+                    <h5 class="thicker-text">Title</h5>
+                    <p:inputText id="contact-title"
+                                 required="true"
+                                 requiredMessage="insert title"
+                                 size="26"
+                                 counter="title-counter"
+                                 value="#{JavaEmailHandle.email.subject}"
+                                 counterTemplate="{0}
+                                 characthers remaining."
+                                 maxlength="30" />
+                    <br/>
+                    <h:outputLabel id="title-counter" />
+                    <br/>
+                    <h:message for="contact-title" class="error-messages"/>
+                </div>              
                 
-            </h:form>
-
+                <div class="margin-normal">
+                    <h5 class="thicker-text">Email</h5>
+                    <p:inputText id="contact-email"
+                                 validatorMessage="Invalid pattern (xxx@xxx.xxx)"
+                                 value="#{UserHandle.user.email}"
+                                 required="true"
+                                 size="26"
+                                 requiredMessage="insert valid email"
+                                 maxlength="40"
+                                 disabled="#{SessionHandle.logged}"
+                                 placeholder="xxx@xxx.xxx">
+                       
+                    </p:inputText>
+                    <br/>
+                    <h:message for="contact-email" class="error-messages" rendered="#{!SessionHandle.logged}"/>
+                    
+                </div>
+                
+                
+                <div class="margin-normal">
+                    <h5 class="thicker-text">Text Body</h5>
+                    <p:inputTextarea id="contact-text"
+                                     rows="5"
+                                     cols="50"
+                                     value="#{JavaEmailHandle.email.textBody}"
+                                     counter="text-counter"
+                                     maxlength="1000"
+                                     counterTemplate="{0} characters remaining."
+                                     autoResize="false"
+                                     required="true"
+                                     requiredMessage="Insert text"/>
+                    <br/>
+                    <h:outputText id="text-counter" class="block" />
+                    <br/>
+                    <h:message for="contact-text" class="error-messages"/>
+                </div>
+                
+                <div class="margin-normal">
+                    <p:commandButton value="send" update="@form" class="ui-button-raised" 
+                                     action="#{JavaEmailHandle.sendSelfEmail()}"/> 
+                </div>
+                
+                
+            </h:form> 
+                
+            </p:card>
+            
         </p:card>
-
-
     </div>
 
 </ui:composition>

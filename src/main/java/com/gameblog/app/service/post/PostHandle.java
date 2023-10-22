@@ -13,6 +13,8 @@ import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.tools.GraphCreator;
 import com.gameblog.app.tools.ImageByteConverter;
 import com.gameblog.app.utils.EMonth;
+import com.gameblog.app.utils.EPostEvent;
+import com.gameblog.app.utils.EPostTab;
 import com.gameblog.app.utils.RepositoryException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,15 +32,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.transaction.Transactional;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.charts.donut.DonutChartModel;
 import org.primefaces.model.charts.line.LineChartModel;
 import org.primefaces.model.file.UploadedFile;
@@ -48,7 +50,8 @@ import org.primefaces.model.file.UploadedFile;
  * @author orlan
  */
 @Named("PostHandle")
-@SessionScoped
+@Stateful   //To handle timers of the NewsHandler
+@SessionScoped //Fire CDI events and for JSF
 public class PostHandle implements Serializable {
 
     @Inject
@@ -61,15 +64,19 @@ public class PostHandle implements Serializable {
     SessionHandle sessionHandle;
 
     @Inject
-    GeneralViewTools beanTools;
-
+    GeneralViewTools generalBeanTools;
+    
+    @Inject
+    Event<EPostEvent> newsEvent;
+    
+ 
     private UploadedFile imgFile;
 
     private Post post;
-
+    
     private Post viewPost;
 
-    private PostTab currentPostTab;
+    private EPostTab currentPostTab;
 
     private LineChartModel PostNumberGraph;
 
@@ -77,31 +84,12 @@ public class PostHandle implements Serializable {
 
     private static final Logger logger = Logger.getLogger(PostHandle.class.getName());
 
-    public enum PostTab {
-        ALL("All"),
-        ACTION("Action"),
-        ADVENTURE("Adventure"),
-        RPG("RPG"),
-        SIMULATION("Simulation"),
-        PUZZLE("Puzzle"),
-        SPORTS_RACING("Sports/Racing");
-
-        private final String category;
-
-        PostTab(String category) {
-            this.category = category;
-        }
-
-        public String getCategory() {
-            return this.category;
-        }
-    }
     
     
     @PostConstruct
     public void init() {
         setNewPost();
-        currentPostTab = PostTab.ALL;
+        currentPostTab = EPostTab.ALL;
     }
 
     public PostHandle() {
@@ -136,43 +124,16 @@ public class PostHandle implements Serializable {
         post = new Post();
     }
 
-    public PostTab getCurrentPostTab() {
+    public EPostTab getCurrentPostTab() {
         return currentPostTab;
     }
 
-    public void setCurrentPostTab(PostTab currentPostTab) {
+    public void setCurrentPostTab(EPostTab currentPostTab) {
         this.currentPostTab = currentPostTab;
     }
 
     
-    public void setPostCategory(TabChangeEvent event) {
-        String title = event.getTab().getTitle().replaceFirst("/", "_").toUpperCase();
-        switch (PostTab.valueOf(title)) {
-            case ALL:
-                this.currentPostTab = PostTab.ALL;
-                break;
-            case ACTION:
-                this.currentPostTab = PostTab.ACTION;
-                break;
-            case ADVENTURE:
-                this.currentPostTab = PostTab.ADVENTURE;
-                break;
-            case RPG:
-                this.currentPostTab = PostTab.RPG;
-                break;
-            case SIMULATION:
-                this.currentPostTab = PostTab.SIMULATION;
-                break;
-            case PUZZLE:
-                this.currentPostTab = PostTab.PUZZLE;
-                break;
-            case SPORTS_RACING:
-                this.currentPostTab = PostTab.SPORTS_RACING;
-                break;
-            default:
-                this.currentPostTab = PostTab.ALL;
-        }
-    }
+   
 
     public LineChartModel getPostNumberGraph() {
         PostNumberGraph = createNumberOfPostGraph();
@@ -193,20 +154,17 @@ public class PostHandle implements Serializable {
             post.setUser(user);
             post.setDate(new Date());
             postRepository.create(post);
-            PrimeFaces.current().executeScript("PF('postCreatorDlg').hide();");
-            showSucessMessage();
+            generalBeanTools.executePrimeFacesScript("PF('postCreatorDlg').hide();");
+            newsEvent.fire(EPostEvent.CREATE);
+            generalBeanTools.showAlertMessage("Sucess", "Post Created", FacesMessage.SEVERITY_INFO);
+            generalBeanTools.executePrimeFacesUpdate(":articles-form:category-tab");
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
     }
 
-    public void showSucessMessage() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucess", "Post Created");
-        PrimeFaces.current().dialog().showMessageDynamic(message);
-    }
 
     @Transactional(value = Transactional.TxType.REQUIRED,
             rollbackOn = {SQLException.class, RepositoryException.class},
@@ -226,10 +184,25 @@ public class PostHandle implements Serializable {
     @Transactional(value = Transactional.TxType.REQUIRED,
             rollbackOn = {SQLException.class, RepositoryException.class},
             dontRollbackOn = {SQLWarning.class})
+    public List<Post> getAllPostsListByDate(Date date) {
+       List<Post> resulList = null;
+        try {
+            resulList = postRepository.findAllByDate(date);
+        } catch (RepositoryException | NoResultException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return resulList;
+    }
+
+    @Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
     public void removePost(Post post){
         try {
             postRepository.delete(post);
-            System.err.println(post.getTitle());
+            newsEvent.fire(EPostEvent.DELETE);
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
@@ -241,7 +214,7 @@ public class PostHandle implements Serializable {
             rollbackOn = {SQLException.class, RepositoryException.class},
             dontRollbackOn = {SQLWarning.class})
     public List<Post> getCategoryPostsList() {
-        if (currentPostTab.name().equals(PostTab.ALL.name())) {
+        if (currentPostTab.name().equals(EPostTab.ALL.name())) {
             return getAllPostsList();
         } else {
             List<Post> resulList = null;
@@ -274,7 +247,7 @@ public class PostHandle implements Serializable {
 
     public List<String> getCategoryStringList() {
         List<String> categoryList = new ArrayList<>();
-        for (PostTab p : PostTab.values()) {
+        for (EPostTab p : EPostTab.values()) {
             categoryList.add(p.getCategory());
         }
         return categoryList;
@@ -282,7 +255,7 @@ public class PostHandle implements Serializable {
 
     public void showPostDialog(Post viewPost) {
         setViewPost(viewPost);
-        beanTools.executePrimeFacesScript("PF('postDlg').show();");
+        generalBeanTools.executePrimeFacesScript("PF('postDlg').show();");
     }
 
     @Transactional(value = Transactional.TxType.REQUIRED,
@@ -338,7 +311,7 @@ public class PostHandle implements Serializable {
             Function<Post, String> categoryGroup = new Function<Post, String>() {
                 @Override
                 public String apply(Post p) {
-                    return convertCategoryName(p.getCategory());
+                    return currentPostTab.convertCategoryName(p.getCategory());
                 }
             };
 
@@ -348,10 +321,10 @@ public class PostHandle implements Serializable {
             List<Number> values = new ArrayList<>();
             List<String> labels = new ArrayList<>();
 
-            int categoryTypeNumber = PostTab.values().length - 1;
+            int categoryTypeNumber = EPostTab.values().length - 1;
             for (int i = 0; i < categoryTypeNumber; i++) {
-                String categoryStr = PostTab.values()[i].getCategory();
-                if (!categoryStr.equals(PostTab.ALL.getCategory())) {
+                String categoryStr = EPostTab.values()[i].getCategory();
+                if (!categoryStr.equals(EPostTab.ALL.getCategory())) {
 
                     if (postsByCategory.containsKey(categoryStr)) {
                         values.add(postsByCategory.get(categoryStr).size());
@@ -371,25 +344,5 @@ public class PostHandle implements Serializable {
         throw new RuntimeException("Error Post -- (Create DonutGraph) Something went wrong");
     }
 
-    private String convertCategoryName(String category) {
-        String modCategory = category.replaceFirst("/", "_").toUpperCase();
-        switch (PostTab.valueOf(modCategory)) {
-            case ALL:
-                return PostTab.ALL.getCategory();
-            case ACTION:
-                return PostTab.ACTION.getCategory();
-            case ADVENTURE:
-                return PostTab.ADVENTURE.getCategory();
-            case RPG:
-                return PostTab.RPG.getCategory();
-            case SIMULATION:
-                return PostTab.SIMULATION.getCategory();
-            case PUZZLE:
-                return PostTab.PUZZLE.getCategory();
-            case SPORTS_RACING:
-                return PostTab.SPORTS_RACING.getCategory();
-        }
-        throw new RuntimeException("Error Post -- (Convert category name) Something went wrong");
-    }
 
 }

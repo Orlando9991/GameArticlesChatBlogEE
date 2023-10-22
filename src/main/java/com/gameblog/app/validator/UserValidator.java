@@ -8,7 +8,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -21,7 +20,7 @@ import javax.persistence.Query;
  */
 @Named("UserValidator")
 @RequestScoped
-public class UserValidator implements Validator{
+public class UserValidator implements DataBaseFindValidator{
 
     @PersistenceContext(unitName = "gameblogPU")
     private EntityManager em;
@@ -29,24 +28,25 @@ public class UserValidator implements Validator{
     
     @Override
     public void validate(FacesContext fc, UIComponent uic, Object value) throws ValidatorException {
-        String strValue =  ((String)value); 
+        String strValue =  (String)value; 
         String idComponent = uic.getId();
-        boolean exists = false;
+        boolean dbExists = false;
         
         if(idComponent.equals("nameForm")){
-                exists = userExists(strValue, "username", "User.findByUsername");
+                dbExists = exists(strValue, "username", "User.findByUsername");
         }else if(idComponent.equals("emailForm")){
-                exists = userExists(strValue, "email", "User.findByEmail");
+                dbExists = exists(strValue, "email", "User.findByEmail");
         }
         
-        if(exists){
+        if(dbExists){
             throw  new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"","User allready exists"));
         }
     }
     
     
     
-    private boolean userExists(String value, String parameter, String query){
+    @Override
+    public boolean exists(String value, String parameter, String query){
         System.err.println("value");
         
         Query getUserQuery = em.createNamedQuery(query);
@@ -55,5 +55,7 @@ public class UserValidator implements Validator{
 
         return userCount > 0;
     }
+
+
     
 }
