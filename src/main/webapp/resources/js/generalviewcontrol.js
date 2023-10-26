@@ -137,3 +137,4 @@ function resetHomeTitlesPos(initiate, title){
     }
     title.textContent = "GameBlog";
 }
+

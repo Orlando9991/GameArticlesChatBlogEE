@@ -64,6 +64,10 @@ body{
     width: 700px !important;
 }
 
+#chat-message-container{
+    max-height: 300px;
+    overflow-y: auto;
+}
 
 .articles-container{
     margin-top: 30px;

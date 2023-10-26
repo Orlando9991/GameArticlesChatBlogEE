@@ -29,6 +29,9 @@ import javax.transaction.Transactional;
  */
 @Named("UserHandle")
 @SessionScoped
+@Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
 public class UserHandle implements Serializable{
     
     @Inject
@@ -73,10 +76,6 @@ public class UserHandle implements Serializable{
         this.disableEditSettings = disableEditSettings;
     }
    
-    
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public void registUser(){
         
         try {
@@ -90,9 +89,6 @@ public class UserHandle implements Serializable{
         }
     }
     
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public void updateUser(){
         try {
             System.out.println(user.getPassword());
@@ -106,9 +102,6 @@ public class UserHandle implements Serializable{
         }
     }
     
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public User findUser(String username){
         try {
             return userRepository.findByName(username).get();
@@ -120,9 +113,6 @@ public class UserHandle implements Serializable{
         throw new RuntimeException("Something went wrong. (User not found)");
     }
     
-     @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public void removeUser(){
          try {
             userRepository.delete(findUser(user.getUsername()));

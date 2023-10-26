@@ -19,12 +19,12 @@ com\gameblog\app\service\session\Logout.class
 com\gameblog\app\service\email\JavaEmailHandle.class
 com\gameblog\app\repository\RepositoryDAO.class
 com\gameblog\app\service\post\comments\PostCommentsHandle.class
+com\gameblog\app\service\chat\ChatServerSocket.class
 com\gameblog\app\model\Post.class
 com\gameblog\app\utils\EMonth.class
 com\gameblog\app\service\user\UserHandle.class
 com\gameblog\app\service\contact\ContactSubjectHandle.class
 com\gameblog\app\tools\GeneralViewTools.class
-com\gameblog\app\service\post\PostHandle$2.class
 com\gameblog\app\tools\ImageByteConverter.class
 com\gameblog\app\repository\UserRepository.class
 com\gameblog\app\model\PostComments.class
@@ -32,7 +32,6 @@ com\gameblog\app\tools\JavaEmailTool$1.class
 com\gameblog\app\tools\GraphCreator.class
 com\gameblog\app\validator\PasswordConstraint.class
 com\gameblog\app\service\post\PostHandle.class
-com\gameblog\app\service\post\PostHandle$1.class
 com\gameblog\app\repository\PostRepository.class
 com\gameblog\app\tools\GeneralViewTools$1.class
 com\gameblog\app\validator\PasswordConstraintValidator.class

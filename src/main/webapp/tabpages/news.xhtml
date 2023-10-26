@@ -1,38 +1,81 @@
 <ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:b="http://bootsfaces.net/ui"
     xmlns:p="http://primefaces.org/ui"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:botDetect="https://captcha.com/java/jsf"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
+    
+    
     <h:outputScript library="js" name="generalviewcontrol.js"/>
+    <h:outputScript library="js" name="chatclient.js"/>
     
     <div id="news-page" class="margin-normal padding-normal ">
         <p:card>
             <h:form prependId="false">
-                <p:dataScroller id="news-data" value="#{NewsHandle.postList}" var="postContent" chunkSize="2" >
+                <p:dataScroller id="news-data" value="#{NewsHandle.postList}" var="postContent" chunkSize="2"  >
                     <f:facet name="header">
                         <h5>Last updated: #{GeneralViewTools.todayDate}</h5>
-                        <p:commandButton type="button" value="Refresh" action="#{GeneralViewTools.executePrimeFacesUpdate('news-data')}" update="news-data" icon="pi pi-refresh"/>
+                        <p:commandButton type="button" value="Refresh" class="border-shadow" action="#{GeneralViewTools.executePrimeFacesUpdate('news-data')}" update="news-data" icon="pi pi-refresh"/>
                     </f:facet>
 
                     <div>                       
-                        <p:fieldset legend="#{postContent.title}" toggleable="true" toggleSpeed="500">
-                            <p class="m-0">
-                               #{BeanTools.shortenText(postContent.text,20)}
-                            </p>
+                        <p:fieldset legend="#{postContent.title}  / autor: #{postContent.user.username}" toggleable="true" toggleSpeed="500" collapsed="true" >
+                            <p:graphicImage class="post-card-img" alt="image" url="getpostimage?photo=#{postContent.id}" />
+                            <p:outputLabel class="text3xl" escape="false" value="#{GeneralViewTools.shortenText(postContent.text,20)}" />
                         </p:fieldset>
                     </div>
 
                     <f:facet name="loader">
                         <div class="text-center margin-normal">
-                            <p:commandButton type="button" value="More" icon="pi pi-refresh"/>
+                            <p:commandButton value="More" icon="pi pi-refresh"/>
                         </div>
                     </f:facet>
                 </p:dataScroller>
+            </h:form>
+        </p:card>
+        
+        <p:card>
+            <h:form id="chat-form" prependId="false">
+
+                <p:panel>                       
+                    <f:facet name="header">
+                        <div class="text-center margin-normal padding-low background-blue">
+                            <p:outputLabel class="text4xl thicker-text white-text" value="Chat"/>
+                        </div>
+                    </f:facet>
+                    
+                    <p:card class="margin-low background-grey">
+                        <div id="chat-message-container" class="margin-low background-grey"></div>
+                    </p:card>
+                    
+                    
+                    <p:card rendered="#{!SessionHandle.logged}">
+                        <div>
+                            <p:outputLabel class="text2xl thicker-text" value="Login or register to enter on the chat" />
+                        </div>
+                        <div class="login-container">
+                                <p:commandButton  id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
+                                <p:commandButton  id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
+                        </div>
+                    </p:card>
+                    
+                    <p:card rendered="#{SessionHandle.logged}" class="padding-normal">
+                        <p:outputLabel class="text2xl" value="Insert message"/>
+                        <div class="flex-display">
+                            <p:inputTextarea id="chat-input"
+                                             class="text2xl border-shadow"
+                                             required="true"
+                                             requiredMessage="Must not be empty"
+                                             cols="60"
+                                             maxlength="2000"
+                                             />                
+                            <h:message for="chat-input" class="error-messages"/>
+                            <p:commandButton type="button" class="margin-left-low border-shadow" disabled="#{!SessionHandle.logged}" value="send" update="chat-form" onclick="sendSocketMessage('#{SessionHandle.userName}')"/>
+                        </div>
+                    </p:card>    
+    
+                </p:panel>
             </h:form>
         </p:card>
     </div>

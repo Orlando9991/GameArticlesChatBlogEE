@@ -45,6 +45,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
 }
 
+.textwrap {  
+   white-space: pre-wrap;        
+   white-space: -moz-pre-wrap;      
+   white-space: -pre-wrap;         
+   white-space: -o-pre-wrap;      
+   word-wrap: break-word;       
+}
+
 /*Position________________________________*/
 
 .center{
@@ -101,7 +109,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     position:absolute !important;
 }
 
-/*Space/Margin_________________________________*/
+/*Space/Margin/Shadow etc_________________________________*/
 
 .margin-right-low{
     margin-right: 20px;
@@ -131,6 +139,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding:20px;
 }
 
+.margin-low{
+    margin: 10px;
+}
+
 .margin-normal{
     margin: 20px;
 }
@@ -140,13 +152,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .background-white{
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 1) !important;
+}
+
+.background-grey{
+    background: rgba(230, 230, 230, 1) !important;
+}
+
+.background-blue{
+    background-color: #2196f3 !important;
 }
 
 .background-fade-top{
   -webkit-mask-image: -webkit-gradient(linear, center top, center bottom,
       color-stop(0.00,  rgba(0,0,0,0)),
       color-stop(1.00,  rgba(0,0,0,1)));
+}
+
+.radius-low{
+    border-radius: 20px !important;
+}
+
+.border-shadow{
+    box-shadow: 1px 2px 10px rgba(0,0,0,0.6) !important;
 }
 
 /*Image*/
@@ -168,6 +196,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 20px;
     z-index: 30;
 }
+
 
 /* link */
 

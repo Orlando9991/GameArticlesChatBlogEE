@@ -21,15 +21,15 @@
             
             <p:commandButton  
                 id="comment-add-comment"
-                class="ui-button-raised"
+                class="ui-button-raised border-shadow"
                 value="Add comment"
                 rendered="#{SessionHandle.logged}"
                 action="#{PostCommentsHandle.createComment(PostHandle.viewPost)}"
-                update="comments-post-dialog growlComment"/>           
+                update="comments-post-form:comments-post-dialog growlComment"/>           
             
             <p:commandButton  
                 id="comment-login-required"
-                class="ui-button-raised" 
+                class="ui-button-raised border-shadow" 
                 value="Login to comment"
                 rendered="#{!SessionHandle.logged}"
                 onclick="PF('signInDlg').show();"/>

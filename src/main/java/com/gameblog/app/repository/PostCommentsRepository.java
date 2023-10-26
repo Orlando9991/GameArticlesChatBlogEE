@@ -61,7 +61,7 @@ public class PostCommentsRepository implements RepositoryDAO<PostComments>{
 
     @Override
     public void delete(PostComments postComents) throws RepositoryException {
-        em.remove(postComents);
+        em.remove(em.merge(postComents));
     }
 
     @Override

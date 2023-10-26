@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -52,6 +51,9 @@ import org.primefaces.model.file.UploadedFile;
 @Named("PostHandle")
 @Stateful   //To handle timers of the NewsHandler
 @SessionScoped //Fire CDI events and for JSF
+@Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
 public class PostHandle implements Serializable {
 
     @Inject
@@ -68,7 +70,6 @@ public class PostHandle implements Serializable {
     
     @Inject
     Event<EPostEvent> newsEvent;
-    
  
     private UploadedFile imgFile;
 
@@ -132,9 +133,6 @@ public class PostHandle implements Serializable {
         this.currentPostTab = currentPostTab;
     }
 
-    
-   
-
     public LineChartModel getPostNumberGraph() {
         PostNumberGraph = createNumberOfPostGraph();
         return PostNumberGraph;
@@ -145,9 +143,6 @@ public class PostHandle implements Serializable {
         return CategoryPostNumberGraph;
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public void createPost() throws ServletException, IOException {
         try {
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
@@ -165,10 +160,6 @@ public class PostHandle implements Serializable {
         }
     }
 
-
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public List<Post> getAllPostsList() {
         List<Post> resulList = null;
         try {
@@ -181,9 +172,7 @@ public class PostHandle implements Serializable {
         return resulList;
     }
     
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
+
     public List<Post> getAllPostsListByDate(Date date) {
        List<Post> resulList = null;
         try {
@@ -196,9 +185,7 @@ public class PostHandle implements Serializable {
         return resulList;
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
+
     public void removePost(Post post){
         try {
             postRepository.delete(post);
@@ -210,9 +197,6 @@ public class PostHandle implements Serializable {
         }
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public List<Post> getCategoryPostsList() {
         if (currentPostTab.name().equals(EPostTab.ALL.name())) {
             return getAllPostsList();
@@ -229,9 +213,6 @@ public class PostHandle implements Serializable {
         }
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public List<Post> getAuthorPostsList() {
         List<Post> resulList = null;
         try {
@@ -247,6 +228,7 @@ public class PostHandle implements Serializable {
 
     public List<String> getCategoryStringList() {
         List<String> categoryList = new ArrayList<>();
+        
         for (EPostTab p : EPostTab.values()) {
             categoryList.add(p.getCategory());
         }
@@ -258,26 +240,19 @@ public class PostHandle implements Serializable {
         generalBeanTools.executePrimeFacesScript("PF('postDlg').show();");
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     private LineChartModel createNumberOfPostGraph() {
 
         try {
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
             List<Post> postByUser = postRepository.findByAuthor(user);
-
-            Function<Post, Month> dateGroup = new Function<Post, Month>() {
-                @Override
-                public Month apply(Post p) {
+     
+            Map<Month, List<Post>> postsByMonth = postByUser
+                    .stream()
+                    .collect(Collectors.groupingBy( p -> {
                     Date date = p.getDate();
                     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     return localDate.getMonth();
-                }
-            };
-
-            //group posts by month
-            Map<Month, List<Post>> postsByMonth = postByUser.stream().collect(Collectors.groupingBy(dateGroup));
+                    }));
 
             List<Object> values = new ArrayList<>();
             List<String> labels = new ArrayList<>();
@@ -300,23 +275,15 @@ public class PostHandle implements Serializable {
         throw new RuntimeException("Error Post -- (Create LineGraph) Something went wrong");
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
     public DonutChartModel createCategoryNumberGraph() {
         try {
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
             List<Post> postByUser = postRepository.findByAuthor(user);
 
-            Function<Post, String> categoryGroup = new Function<Post, String>() {
-                @Override
-                public String apply(Post p) {
-                    return currentPostTab.convertCategoryName(p.getCategory());
-                }
-            };
-
             //group posts by category
-            Map<String, List<Post>> postsByCategory = postByUser.stream().collect(Collectors.groupingBy(categoryGroup));
+            Map<String, List<Post>> postsByCategory = postByUser
+                    .stream()
+                    .collect(Collectors.groupingBy(p-> currentPostTab.convertCategoryName(p.getCategory())));
 
             List<Number> values = new ArrayList<>();
             List<String> labels = new ArrayList<>();
@@ -343,6 +310,4 @@ public class PostHandle implements Serializable {
         }
         throw new RuntimeException("Error Post -- (Create DonutGraph) Something went wrong");
     }
-
-
 }

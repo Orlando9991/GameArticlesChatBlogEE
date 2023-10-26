@@ -16,7 +16,7 @@
                    <c:if test="#{UserHandle.currentUserAdmin}">
                        <div>         
                            <p:commandButton 
-                               class="ui-button-danger position-absolute"
+                               class="ui-button-danger position-absolute border-shadow"
                                action="#{PostHandle.removePost(postContent)}"
                                update="articles-form:category-tab"
                                icon="pi pi-trash"
@@ -42,7 +42,7 @@
                            <h:outputText class="postText" value="#{BeanTools.shortenText(postContent.text,10)}"/>
                        </div>              
                    <div class="flex-display center-content margin-top-low" >
-                       <p:commandButton value="Show more" action="#{PostHandle.showPostDialog(postContent)}" update=":post-dialog"></p:commandButton>
+                       <p:commandButton class="border-shadow" value="Show more" action="#{PostHandle.showPostDialog(postContent)}" update=":post-dialog"></p:commandButton>
                    </div>
                        
                </p:card>

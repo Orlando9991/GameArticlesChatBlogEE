@@ -12,6 +12,7 @@ import com.gameblog.app.repository.PostRepository;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.tools.GeneralViewTools;
+import com.gameblog.app.utils.EPostEvent;
 import com.gameblog.app.utils.RepositoryException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -33,14 +34,18 @@ import javax.transaction.Transactional;
  *
  * @author orlan
  */
+
 @Named("PostCommentsHandle")
 @RequestScoped
+@Transactional(value = Transactional.TxType.REQUIRED,
+            rollbackOn = {SQLException.class, RepositoryException.class},
+            dontRollbackOn = {SQLWarning.class})
 public class PostCommentsHandle implements Serializable {
     
     private static final Logger logger = Logger.getLogger(PostCommentsHandle.class.getName());
     
     @Inject
-    PostCommentsRepository postCommentsRepo;
+    PostCommentsRepository postCommentsRepository;
 
     @Inject
     PostRepository postRepository;
@@ -69,9 +74,7 @@ public class PostCommentsHandle implements Serializable {
         this.commentText = commentText;
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
+    
     public void createComment(Post post) {
 
         try {
@@ -81,7 +84,7 @@ public class PostCommentsHandle implements Serializable {
             postComments.setPost(postRepository.findById(post.getId()).get());
             postComments.setDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
             postComments.setComment(commentText);
-            postCommentsRepo.create(postComments);
+            postCommentsRepository.create(postComments);
 
             generalViewTools.showPopUpMessage("Comment added",
                     user.getUsername() + "comment: " + generalViewTools.shortenText(commentText, 10),
@@ -94,15 +97,13 @@ public class PostCommentsHandle implements Serializable {
 
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRED,
-            rollbackOn = {SQLException.class, RepositoryException.class},
-            dontRollbackOn = {SQLWarning.class})
+    
     public List<PostComments> getAllCommentsByPost(Post post) {
 
         List<PostComments> resultList = null;
 
         try {
-            resultList = postCommentsRepo.findbyPost(post).get();
+            resultList = postCommentsRepository.findbyPost(post).get();
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
@@ -112,12 +113,23 @@ public class PostCommentsHandle implements Serializable {
         return resultList;
     }
     
+    
+    public void removeComment(PostComments comment){
+        try {
+            postCommentsRepository.delete(comment);
+        } catch (RepositoryException | NoResultException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }  
+    }
+    
+
     public List<PostComments> getAllUserComments(){
         List<PostComments> resultList = null;
-
         try {
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
-            resultList = postCommentsRepo.findbyUser(user);
+            resultList = postCommentsRepository.findbyUser(user);
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
