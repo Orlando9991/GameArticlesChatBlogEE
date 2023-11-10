@@ -27,18 +27,17 @@ public class JavaEmailHandle{
     private Email email;
     
     @Inject
-    UserHandle UserHandle;
+    private UserHandle UserHandle;
     
     @Inject
-    SessionHandle sessionHandle;
+    private SessionHandle sessionHandle;
     
     @Inject
-    ContactSubjectHandle ContactSubjectHandle;
+    private ContactSubjectHandle ContactSubjectHandle;
     
     @Inject
-    GeneralViewTools generalViewTools;
+    private GeneralViewTools generalViewTools;
   
-
     @PostConstruct
     public void init() {
         email = new Email();
@@ -57,23 +56,27 @@ public class JavaEmailHandle{
     
     private void prepareSelfEmailSubject(){
         if(sessionHandle.isLogged()){
-            email.setSubject("("
-                    +ContactSubjectHandle.getSelection()
-                    + ") "
-                    + email.getSubject()
-                    +" "
-                    + UserHandle.getUser().getUsername()
-            );
+            String subjectString = new String()
+                    .concat("(")
+                    .concat(ContactSubjectHandle.getSelection())
+                    .concat(") ")
+                    .concat(email.getSubject())
+                    .concat(" -")
+                    .concat(UserHandle.getUser().getUsername());
+                            
+            email.setSubject(subjectString);
         }else{
-            email.setSubject("("
-                    + ContactSubjectHandle.getSelection()
-                    + ") "
-                    + email.getSubject()
-                    +" (external) "
-                    + UserHandle.getUser()
+            String subjectString = new String()
+                    .concat("(")
+                    .concat(ContactSubjectHandle.getSelection())
+                    .concat(") ")
+                    .concat(email.getSubject())
+                    .concat(" (external) ")
+                    .concat(UserHandle.getUser()
                         .getEmail()
-                        .substring(0,UserHandle.getUser().getEmail().indexOf("@"))
-            );          
+                        .substring(0,UserHandle.getUser().getEmail().indexOf("@")));
+            
+            email.setSubject(subjectString);          
         }
     }
     

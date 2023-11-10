@@ -1,0 +1,88 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 27/10/2023, 18:28:01
+    Author     : orlan
+*/
+
+.cube-container{
+    perspective: 1000px;
+    z-index: 15;
+}
+
+.cube{
+   height: 250px;
+   width: 250px;
+   transform-style: preserve-3d;
+   animation: cubeAnimator 15s infinite;
+}
+
+@keyframes cubeAnimator{
+    0%{
+        transform: rotateX(45deg) rotateY(-45deg);
+    }
+    25%{
+        transform: rotateX(-45deg) rotateY(-45deg);
+    }
+    50%{
+        transform: rotateX(-45deg) rotateY(45deg);
+    }
+    100%{
+        transform: rotateX(45deg) rotateY(-45deg);
+    }
+}
+
+.cube-face{
+    height: 250px;
+    width: 250px;
+    text-align: center;
+    padding: 100px 0px;
+    color: black;
+    background: white;
+    
+    font-size: 50px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.cube-sides{
+    width: 250px;
+    height: 250px;
+    background-image: url("#{resource['img/blockside.jpg']}");
+}
+
+#cube-left{
+    right: 125px;
+    transform: rotateY(-90deg);
+    animation: cubeLeftfaceAnimator 5s infinite;
+}
+
+#cube-right{
+    left: 125px;
+    transform: rotateY(90deg);
+    animation: cubeRightfaceAnimator 5s infinite;
+}
+
+#cube-top{
+    bottom: 125px;
+    transform: rotateX(90deg);
+    background-image: url("#{resource['img/blocktop.jpg']}");
+    animation: cubeTopfaceAnimator 5s infinite;
+}
+
+#cube-bottom{
+    top: 125px;
+    transform: rotateX(-90deg);
+    background-image: url("#{resource['img/blockbottom.jpg']}");
+    animation: cubeBottomfaceAnimator 5s infinite;
+}
+
+#cube-front{
+    transform: translateZ(125px);
+}
+
+#cube-back{
+    transform: translateZ(-125px);
+}

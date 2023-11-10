@@ -7,7 +7,6 @@ package com.gameblog.app.service.session;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +22,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "logout", urlPatterns = {"/logout"})
 public class Logout extends HttpServlet {
-
+    
+    private final static Logger logger = Logger.getLogger(Logout.class.getName());
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,7 +56,7 @@ public class Logout extends HttpServlet {
             rd.forward(request,response);
             
         } catch (Exception e) {
-            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, "Session not found, redirecting to index.xhtml");
+            logger.log(Level.SEVERE, "Session not found, redirecting to index.xhtml");
             response.sendRedirect("/GameBlog/index.xhtml");
         }
         

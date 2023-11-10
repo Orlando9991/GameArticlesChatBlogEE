@@ -47,5 +47,4 @@ public class Email {
     public void setTextBody(String textBody) {
         this.textBody = textBody;
     }
-    
 }

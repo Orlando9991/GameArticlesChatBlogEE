@@ -14,12 +14,10 @@ import org.primefaces.model.file.UploadedFile;
  *
  * @author orlan
  */
-public class ImageByteConverter {
-    
+public final class ImageByteConverter {
 
     private ImageByteConverter(){}
 
-    
     public static byte [] getByteOfImage(UploadedFile imgFile) throws IOException{
         if (imgFile != null) {
             String fileName = imgFile.getFileName();
@@ -32,10 +30,5 @@ public class ImageByteConverter {
             return baos.toByteArray();
         }
         throw new IOException("Image file Null");
-    }
-    
-  
-    
-    
-    
+    } 
 }

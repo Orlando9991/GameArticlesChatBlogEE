@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PostImageServlet extends HttpServlet {
     
     @Inject
-    PostRepository postFacade;
+    private PostRepository postFacade;
     
     private final static Logger logger = Logger.getLogger(PostImageServlet.class.getName());
     /**
@@ -45,9 +45,6 @@ public class PostImageServlet extends HttpServlet {
         long index = Integer.parseInt(indexString.trim());
         response.setContentType("image/jpeg");
         
-       
-       
-       
         try (OutputStream out = response.getOutputStream()) {
             Post post = postFacade.findById(index).get();
             byte[] bytes = post.getImage();
@@ -73,7 +70,4 @@ public class PostImageServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-
- 
 }

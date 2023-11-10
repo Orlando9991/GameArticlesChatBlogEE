@@ -29,14 +29,12 @@ public abstract class GraphCreator {
         LineChartDataSet dataSet = new LineChartDataSet();
         dataSet.setData(values);
         dataSet.setFill(false);
-        dataSet.setLabel("Posts");
+        dataSet.setLabel(title);
         dataSet.setBorderColor("rgb(75, 192, 192)");
         dataSet.setTension(1);
-        
-        
+
         data.addChartDataSet(dataSet);       
         data.setLabels(labels);
-        
 
         //Options
         LineChartOptions options = new LineChartOptions();
@@ -82,8 +80,5 @@ public abstract class GraphCreator {
 
         donutModel.setData(data);
         return donutModel;
-   }
-    
-    
-    
+   } 
 }

@@ -13,8 +13,8 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class PasswordConstraintValidator implements ConstraintValidator <PasswordConstraint, String>{
    
-    int pswSize;
-    String pswPattern;
+    private int pswSize;
+    private String pswPattern;
     
     @Override
     public void initialize(PasswordConstraint constraintAnnotation) {

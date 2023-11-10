@@ -6,9 +6,21 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:dialog id="post-creator-dialog" responsive="true" onShow="PF('postCreatorDlg').initPosition()" header="New Post" widgetVar="postCreatorDlg" width="auto" height="auto" dynamic="true" fitViewport="true" modal="true" draggable="false" showEffect="fade">
-        <h:form enctype="multipart/form-data">
-                        
+    <p:dialog 
+        id="post-creator-dialog"
+        responsive="true"
+        onShow="PF('postCreatorDlg').initPosition()"
+        header="New Post"
+        widgetVar="postCreatorDlg"
+        width="auto"
+        height="auto"
+        dynamic="true"
+        fitViewport="true"
+        modal="true"
+        draggable="false"
+        showEffect="fade">
+        
+        <h:form enctype="multipart/form-data">           
             <div>
                 <div class="ui-inputgroup-addon">Title</div>
                 <p:inputText 
@@ -18,6 +30,7 @@
                     requiredMessage="Insert title"
                     validator="#{PostValidator.validate}"
                     value="#{PostHandle.post.title}"/>
+                
                 <br/>
                 <h:message for="post-creator-title" class="error-messages"/>
             </div>
@@ -50,27 +63,28 @@
                     invalidSizeMessage="Maximum file size allowed is 10 MB"
                     invalidFileMessage="only gif | jpg | jpeg | png is allowed"
                     value ="#{PostHandle.imgFile}"/>
+                
                 <br/>
                 <h:message class="error-messages" for="post-creator-image"/>
             </div>
 
             <div class="margin-top-low">
                 <div class="ui-inputgroup-addon">Text</div>
-                <p:textEditor  id="post-creator-text"
-                               allowImages="true" 
-                               allowLinks="true" 
-                               allowStyles="true" 
-                               allowFormatting="true"
-                               allowBlocks="true"
-                               height="300px"
-                               placeholder="insert text"
-                               required="true"
-                               requiredMessage="Insert text"
-                               value="#{PostHandle.post.text}"/>
+                <p:textEditor  
+                    id="post-creator-text"
+                    allowImages="true" 
+                    allowLinks="true" 
+                    allowStyles="true" 
+                    allowFormatting="true"
+                    allowBlocks="true"
+                    height="300px"
+                    placeholder="insert text"
+                    required="true"
+                    requiredMessage="Insert text"
+                    value="#{PostHandle.post.text}"/>
                 
                 <h:message class="error-messages" for="post-creator-text"/>
             </div>
-            
             <div class="margin-top-low">
                 <p:commandButton value="Create" update="@form" class="btn btn-primary border-shadow"  action="#{PostHandle.createPost}"/>
             </div>

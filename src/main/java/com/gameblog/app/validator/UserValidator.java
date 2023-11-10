@@ -24,8 +24,7 @@ public class UserValidator implements DataBaseFindValidator{
 
     @PersistenceContext(unitName = "gameblogPU")
     private EntityManager em;
-    
-    
+ 
     @Override
     public void validate(FacesContext fc, UIComponent uic, Object value) throws ValidatorException {
         String strValue =  (String)value; 
@@ -42,20 +41,13 @@ public class UserValidator implements DataBaseFindValidator{
             throw  new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"","User allready exists"));
         }
     }
-    
-    
-    
+
     @Override
     public boolean exists(String value, String parameter, String query){
-        System.err.println("value");
-        
         Query getUserQuery = em.createNamedQuery(query);
         getUserQuery.setParameter(parameter, value);
         int userCount = getUserQuery.getResultList().size();
 
         return userCount > 0;
-    }
-
-
-    
+    }  
 }

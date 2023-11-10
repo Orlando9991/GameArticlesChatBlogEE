@@ -56,7 +56,6 @@ public class Post implements Serializable {
     @Size(min = 1, max = 200)
     private String title;
     
-    
     @ManyToOne
     @JoinColumn(name="autor_id")
     private User user;
@@ -76,9 +75,7 @@ public class Post implements Serializable {
     @Size(min = 1, max = 13)
     private String category;
     
-
     public Post() {}
-
 
     public Post(Long id, String title, User autor, Date date, byte[] image, String category) {
         this.id = id;

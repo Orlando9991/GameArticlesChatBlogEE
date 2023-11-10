@@ -34,6 +34,5 @@ public enum EMonth {
     
     public String getAbrevMonth(int v){
         return month.substring(0,v);
-    }
-    
+    } 
 }

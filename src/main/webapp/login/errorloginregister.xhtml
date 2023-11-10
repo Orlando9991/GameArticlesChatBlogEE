@@ -17,23 +17,23 @@
         <b:container fluid="true" class="center">
             <b:row>
                 <b:column>
-                    <p:card class="block-display background-white ">
-
-                        <div class="margin-normal red-text">
-                            <h5>User/Password incorrect</h5>
-                        </div>
-                        
+                    <p:card class="center block-display background-white border-shadow padding-low">
+                        <div class="margin-normal center-content">
+                            <h5 class="thicker-text red-text">User/Password incorrect</h5>
+                        </div>                      
                         <div>
                             <ui:include src="/login/login.xhtml"/>   
                         </div>
-
                         <p:divider  align="center">
                             <b>OR</b>
                         </p:divider>
-
                         <h:form>
                             <div class="flex-display center-content">
-                            <p:commandButton  id="signUpButton" value="Sign Up" class="signUpButton ui-button-raised" onclick="PF('signUpDlg').show();" />    
+                            <p:commandButton  
+                                id="signUpButton" 
+                                class="signUpButton ui-button-raised border-shadow"
+                                value="Sign Up" 
+                                onclick="PF('signUpDlg').show();"/>    
                             </div>
                         </h:form>
                     </p:card>

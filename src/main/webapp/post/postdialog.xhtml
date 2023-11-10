@@ -3,16 +3,18 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:dialog id="post-dialog"  
-              widgetVar="postDlg"  
-              height="auto"
-              dynamic="true"
-              responsive="true"
-              onShow="PF('postDlg').initPosition()"
-              fitViewport="true"
-              draggable="false"
-              showEffect="fade"
-              modal="true">
+    <p:dialog 
+        id="post-dialog"  
+        widgetVar="postDlg"  
+        height="auto"
+        dynamic="true"
+        responsive="true"
+        onShow="PF('postDlg').initPosition()"
+        fitViewport="true"
+        draggable="false"
+        showEffect="fade"
+        modal="true">
+        
         <ui:include src="/post/postview.xhtml"/>
     </p:dialog>
 </ui:composition>

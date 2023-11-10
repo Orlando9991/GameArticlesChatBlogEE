@@ -7,10 +7,9 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:outputScript library="js" name="generalviewcontrol.js"/>
 
-    <div id="home-page">
-                
+    <div id="home-page">                
         <section class="parallax">
-            <h1 id="title" name="title" class="title">GAME BLOG</h1>
+            <h1 id="title" name="title" class="title">GAME BLOG</h1>    
             <p:graphicImage id="clouds" class="background-fade-top" url="#{resource['img/clouds.jpg']}" alt="clouds"  /> 
             <p:graphicImage id="characters" class="fix-ratio" url="#{resource['img/characters.png']}" />
             <p:graphicImage id="arrow" class="fix-ratio" url="#{resource['img/downarrow.gif']}"  />
@@ -20,10 +19,19 @@
             <p:graphicImage id="floor" width="100%" height="auto" url="#{resource['img/floor.png']}" />
             <p:graphicImage id="platform" width="100%" height="auto" url="#{resource['img/platform.png']}" />
             <h:form id="begin-form" prependId="false">
-                 <p:commandLink id="initiate"  class="hidden"   value="START" action="#{GeneralViewTools.changeTab(0)}" />
+                <div class="cube-container">
+                    <div class="cube">
+                        <div id="cube-front" class="cube-face cube-sides">
+                            <p:commandLink id="initiate" class="initiate" value="START" action="#{GeneralViewTools.changeTab(0)}" />
+                        </div>
+                        <div id="cube-back" class="cube-face cube-sides"/>
+                        <div id="cube-top" class="cube-face"/>
+                        <div id="cube-left" class="cube-face cube-sides"/>
+                        <div id="cube-right" class="cube-face cube-sides"/>
+                        <div id="cube-bottom" class="cube-face"/>          
+                    </div>    
+                </div>      
             </h:form>
-        </section>
-        
+        </section>     
     </div>
-    
 </ui:composition>

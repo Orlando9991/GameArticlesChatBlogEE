@@ -2,18 +2,22 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <title>Facelet Title</title>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputStylesheet library="css" name="generalstyle.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="./resources/img/logo.png"/>
     </h:head>
     <h:body>
-        <div class="center flex-display">
-            <img class="not-found-img"/>
-        </div>
-        <div class="go-back">
-            <b:button outcome="/index" iconAwesome="fa-home" value="   Go Back" />
-        </div>
+        <p:card class="center flex-display padding-low border-shadow">
+            <div class="margin-normal">
+                <img class="not-found-img"/>
+            </div>
+            <div class="horizontal-center">
+                <p:button outcome="/index" class=" border-shadow" value="Go Back" />
+            </div>
+        </p:card>
     </h:body>
 </html>

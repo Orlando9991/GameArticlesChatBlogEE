@@ -39,7 +39,7 @@ public class GeneralViewTools{
     PostHandle postHandle;
     
     private TabView tabView;
-    int activeIndex =0;
+    private int activeIndex;
 
     public String shortenText(String txt,int size){
         if(txt.length()>size){
@@ -78,9 +78,7 @@ public class GeneralViewTools{
         postHandle.setCurrentPostTab(EPostTab.values()[i]);
         PrimeFaces.current().executeScript("setActiveRenderSubMenu('articles-form')");
     }
-    
-    
-    
+
     public void setPostCategory(TabChangeEvent event) {
         
         String title = event.getTab().getTitle().replaceFirst("/", "_").toUpperCase();
@@ -136,9 +134,4 @@ public class GeneralViewTools{
     public void setTabView(TabView tabView) {
         this.tabView = tabView;
     }
-  
-    
-    
-    
-   
 }

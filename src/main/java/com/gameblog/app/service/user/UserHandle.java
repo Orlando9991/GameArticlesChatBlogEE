@@ -4,9 +4,8 @@
  */
 package com.gameblog.app.service.user;
 
-import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.model.User;
-import com.gameblog.app.service.post.PostHandle;
+import com.gameblog.app.repository.RepositoryDAO;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.tools.GeneralViewTools;
 import com.gameblog.app.utils.RepositoryException;
@@ -34,14 +33,16 @@ import javax.transaction.Transactional;
             dontRollbackOn = {SQLWarning.class})
 public class UserHandle implements Serializable{
     
-    @Inject
-    UserRepository userRepository;
+    private static final Logger logger = Logger.getLogger(UserHandle.class.getName());
     
     @Inject
-    GeneralViewTools beanTools;
+    private RepositoryDAO<User> repository;
+    
+    @Inject
+    private GeneralViewTools beanTools;
 
     @Inject
-    SessionHandle sessionHandle;
+    private SessionHandle sessionHandle;
     
     private User user;
     
@@ -52,34 +53,12 @@ public class UserHandle implements Serializable{
         user = new User();
         setDisableEditSettings(true);
     }
-    
-    
-    private static final Logger logger = Logger.getLogger(UserHandle.class.getName());
-    
-    public UserHandle(){
-        
-    }
 
-    public User getUser() {
-        return user;
-    }
+    public UserHandle(){}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Boolean getDisableEditSettings() {
-        return disableEditSettings;
-    }
-
-    public void setDisableEditSettings(Boolean disableEditSettings) {
-        this.disableEditSettings = disableEditSettings;
-    }
-   
-    public void registUser(){
-        
+    public void registUser(){     
         try {
-            userRepository.create(user);
+            repository.create(user);
             beanTools.executePrimeFacesScript("PF('signUpDlg').hide();");
             showRegistSucessMessage();
         } catch (RepositoryException | NoResultException e) {
@@ -91,8 +70,7 @@ public class UserHandle implements Serializable{
     
     public void updateUser(){
         try {
-            System.out.println(user.getPassword());
-            userRepository.update(user);
+            repository.update(user);
             setDisableEditSettings(true);
             showUpdateSucessMessage();
         } catch (RepositoryException | NoResultException e) {
@@ -104,7 +82,7 @@ public class UserHandle implements Serializable{
     
     public User findUser(String username){
         try {
-            return userRepository.findByName(username).get();
+            return repository.findByName(username).get();
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
@@ -115,7 +93,7 @@ public class UserHandle implements Serializable{
     
     public void removeUser(){
          try {
-            userRepository.delete(findUser(user.getUsername()));
+            repository.delete(findUser(user.getUsername()));
             beanTools.redirectPage("/GameBlog/logout");
             beanTools.showAlertMessage("Remove Account","Account remove complete",FacesMessage.SEVERITY_INFO);
         } catch (RepositoryException | NoResultException e) {
@@ -152,5 +130,21 @@ public class UserHandle implements Serializable{
         if(sessionHandle.isLogged()){          
             this.user = findUser(sessionHandle.getUserName());
         }
+    }
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Boolean getDisableEditSettings() {
+        return disableEditSettings;
+    }
+
+    public void setDisableEditSettings(Boolean disableEditSettings) {
+        this.disableEditSettings = disableEditSettings;
     }
 }

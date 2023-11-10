@@ -53,6 +53,5 @@ public class ChatServerSocket {
     public void broadcastMessage(String message){
         sessions.stream().forEach(s -> s.getAsyncRemote().sendText(message));
     }
-    
-    
+  
 }

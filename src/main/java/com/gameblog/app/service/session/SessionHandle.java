@@ -6,8 +6,6 @@ package com.gameblog.app.service.session;
 
 import com.gameblog.app.service.user.UserHandle;
 import java.security.Principal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,17 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SessionHandle{
     
     @Inject
-    UserHandle userHandle;
+    private UserHandle userHandle;
         
     public boolean isLogged(){
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         Principal p = externalContext.getUserPrincipal();
-
         //User principal and sessionId valid
         return p != null && request.isRequestedSessionIdValid();
-
     }
     
     public String getUserName(){
@@ -47,6 +42,4 @@ public class SessionHandle{
         }
         return "";
     }
-
-    
 }

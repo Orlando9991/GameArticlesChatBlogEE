@@ -10,7 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/game_blog?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/mySqlGameBlog" object-type="user" pool-name="mysql_game_blog_rootPool"/>
-    
-    
+    <jdbc-resource enabled="true" jndi-name="java:app/mySqlGameBlog" object-type="user" pool-name="mysql_game_blog_rootPool"/>  
 </resources>

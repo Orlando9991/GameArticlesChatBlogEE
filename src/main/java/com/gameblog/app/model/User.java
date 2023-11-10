@@ -46,14 +46,14 @@ public class User implements Serializable {
     private long id;
     
     @NotNull
-    @Size(min = 3, max = 40, message="{errors.firstName.size}")
+    @Size(min = 3, max = 40, message="{errors.user.username.size}")
     private String username;
     
     @NotNull
     @PasswordConstraint(
             pattern = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])((?=.*\\W)|(?=.*_))^[^ ]+$",
             size = 6,
-            message = "Password requires at least one: (lower, capital, symbol, digit) character and min length of 6")
+            message = "{errors.user.password.size}")
     private String password;
     
     @NotNull
@@ -62,7 +62,7 @@ public class User implements Serializable {
     private Date dob;
     
     @NotNull
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "*Insert a valid email")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "{errors.user.email.invalid}")
     @Size(min = 1, max = 40)
     private String email;
     
@@ -77,7 +77,6 @@ public class User implements Serializable {
     public User() {
         this.role = Role.USER.toString();
     }
-
 
     public User(String username, String password, String email, Date dob) {
         this.id = 0L;

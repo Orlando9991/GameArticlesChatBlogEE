@@ -53,6 +53,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
    word-wrap: break-word;       
 }
 
+.thick-underline-blue{
+    box-shadow: 0 10px 0 #2196f3 !important;
+}
+
 /*Position________________________________*/
 
 .center{
@@ -195,6 +199,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 100%;
     padding: 20px;
     z-index: 30;
+    background-color: rgba(44,92,157,0.95);
 }
 
 

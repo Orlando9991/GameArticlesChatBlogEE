@@ -5,6 +5,7 @@
 package com.gameblog.app.tools;
 
 import com.gameblog.app.model.Email;
+import com.gameblog.app.service.user.UserHandle;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +23,19 @@ import javax.mail.internet.MimeMessage;
  */
 public final class JavaEmailTool {
     
-    private static JavaEmailTool javaEmailTool;
-    
+    private static final Logger logger = Logger.getLogger(JavaEmailTool.class.getName());
+    private static JavaEmailTool javaEmailTool; 
     private final static String ACCOUNT_EMAIL = "gameblogsuport@gmail.com";
     private final static String ACCOUNT_PASSWORD = "snrv cmkn sysu dgtq";
     private static Authenticator auth;
     private static Properties properties;
     
+    public static JavaEmailTool getInstance(){
+        if(javaEmailTool == null){
+            javaEmailTool = new JavaEmailTool();
+        }
+        return javaEmailTool;
+    }
      
     private JavaEmailTool() {   
         properties = new Properties();
@@ -46,31 +53,19 @@ public final class JavaEmailTool {
             }
         }; 
     }
-    
-    public static JavaEmailTool getInstance(){
-        if(javaEmailTool == null){
-            javaEmailTool = new JavaEmailTool();
-        }
-        return javaEmailTool;
-    }
-    
 
-    
     public void sendEmail(Email email){
         try {
-            Logger.getLogger(JavaEmailTool.class.getName()).log(Level.SEVERE, "Prepare for sending message");
-            
+            logger.log(Level.SEVERE, "Prepare for sending message");          
             Session session = Session.getInstance(properties,auth);
             Message message = prepareMessage(session, email);
-            Transport.send(message);
-            
-            Logger.getLogger(JavaEmailTool.class.getName()).log(Level.SEVERE, "message sent");
+            Transport.send(message);  
+            logger.log(Level.SEVERE, "message sent");
         } catch (Exception e) {
-            Logger.getLogger(JavaEmailTool.class.getName()).log(Level.SEVERE, "message not sent", e);
+            logger.log(Level.SEVERE, "message not sent", e);
         }
     }
     
-
     private Message prepareMessage(Session session, Email email) {
         try {
             Message message = new MimeMessage(session);
@@ -82,7 +77,7 @@ public final class JavaEmailTool {
             return message;
             
         } catch (Exception e) {
-            Logger.getLogger(JavaEmailTool.class.getName()).log(Level.SEVERE, "Error on prepare message", e);
+            logger.log(Level.SEVERE, "Error on prepare message", e);
         }
         return null;
     }

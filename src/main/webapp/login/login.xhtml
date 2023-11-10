@@ -10,16 +10,32 @@
         <p:growl/>
         <div class="mb-4">
             <h:outputLabel class="form-label" value="Username" for="j_username"/>
-            <input type="text" class="form-control" id="j_username" name="j_username" value="#{UserHandle.user.username}" autocomplete="on" oninput="toggleSubmitLogin()" pt:placeholder="Enter username"/>
+            <input 
+                id="j_username"
+                class="form-control"
+                name="j_username"
+                type="text" 
+                value="#{UserHandle.user.username}"
+                autocomplete="on"
+                oninput="toggleSubmitLogin()"
+                pt:placeholder="Enter username"/>
         </div>
         <br/>
         <div class="mb-4">
             <h:outputLabel class="form-label" value="Password" for="j_password"/>
-            <input type="password"  class="form-control" id="j_password" name="j_password" value="#{UserHandle.user.password}" autocomplete="on" oninput="toggleSubmitLogin()" pt:placeholder="Enter password"/>
+            <input
+                id="j_password"
+                class="form-control"
+                name="j_password"
+                type="password"
+                value="#{UserHandle.user.password}"
+                autocomplete="on"
+                oninput="toggleSubmitLogin()"
+                pt:placeholder="Enter password"/>
         </div>
         <br/><br/>
         <div class="mb-4 flex-display center-content">
-            <button type="submit" id="j_submit" class="btn btn-primary" disabled="true">Sign in</button>
+            <button id="j_submit" class="btn btn-primary border-shadow" type="submit" disabled="true">Sign in</button>
         </div>
     </form> 
     

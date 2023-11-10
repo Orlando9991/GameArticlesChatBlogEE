@@ -9,10 +9,10 @@ import com.gameblog.app.model.Post;
 import com.gameblog.app.model.PostComments;
 import com.gameblog.app.model.User;
 import com.gameblog.app.repository.PostRepository;
+import com.gameblog.app.repository.RepositoryDAO;
 import com.gameblog.app.service.session.SessionHandle;
 import com.gameblog.app.repository.UserRepository;
 import com.gameblog.app.tools.GeneralViewTools;
-import com.gameblog.app.utils.EPostEvent;
 import com.gameblog.app.utils.RepositoryException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -45,19 +45,19 @@ public class PostCommentsHandle implements Serializable {
     private static final Logger logger = Logger.getLogger(PostCommentsHandle.class.getName());
     
     @Inject
-    PostCommentsRepository postCommentsRepository;
+    private RepositoryDAO<PostComments> repository;
 
     @Inject
-    PostRepository postRepository;
+    private RepositoryDAO<Post> postRepository;
 
     @Inject
-    UserRepository userRepository;
+    private RepositoryDAO<User> userRepository;
 
     @Inject
-    SessionHandle sessionHandle;
+    private SessionHandle sessionHandle;
 
     @Inject
-    GeneralViewTools generalViewTools;
+    private GeneralViewTools generalViewTools;
 
     private PostComments postComments;
 
@@ -66,17 +66,7 @@ public class PostCommentsHandle implements Serializable {
     public PostCommentsHandle() {
     }
 
-    public String getCommentText() {
-        return commentText;
-    }
-
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
-
-    
     public void createComment(Post post) {
-
         try {
             postComments = new PostComments();
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
@@ -84,7 +74,7 @@ public class PostCommentsHandle implements Serializable {
             postComments.setPost(postRepository.findById(post.getId()).get());
             postComments.setDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
             postComments.setComment(commentText);
-            postCommentsRepository.create(postComments);
+            repository.create(postComments);
 
             generalViewTools.showPopUpMessage("Comment added",
                     user.getUsername() + "comment: " + generalViewTools.shortenText(commentText, 10),
@@ -94,49 +84,49 @@ public class PostCommentsHandle implements Serializable {
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
     }
 
-    
     public List<PostComments> getAllCommentsByPost(Post post) {
-
         List<PostComments> resultList = null;
-
         try {
-            resultList = postCommentsRepository.findbyPost(post).get();
+            resultList = ((PostCommentsRepository)repository).findbyPost(post).get();
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
         return resultList;
     }
     
-    
     public void removeComment(PostComments comment){
         try {
-            postCommentsRepository.delete(comment);
+            repository.delete(comment);
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }  
     }
-    
 
     public List<PostComments> getAllUserComments(){
         List<PostComments> resultList = null;
         try {
             User user = (User) (userRepository.findByName(sessionHandle.getUserName()).orElseGet(null));
-            resultList = postCommentsRepository.findbyUser(user);
+            resultList = ((PostCommentsRepository)repository).findbyUser(user);
         } catch (RepositoryException | NoResultException e) {
             logger.log(Level.WARNING, e.getMessage());
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
         return resultList;
+    }
+    
+    public String getCommentText() {
+        return commentText;
+    }
+
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
 }

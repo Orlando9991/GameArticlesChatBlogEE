@@ -6,115 +6,120 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    
-    <div class="card padding-low">
-        
+    <div class="card padding-low">  
         <div class="card margin-bottom-normal"  >
-            <h:form prependId="false">
-                
+            <h:form prependId="false">    
                 <p:divider class="text2xl thicker-text" align="center" type="dashed">
                     <b>User Details</b>
-                </p:divider>
-                
-                <p:commandButton icon="pi pi-file-edit"
-                                 class="right-side"
-                                 value="Edit"
-                                 immediate="true"
-                                 update="@form"
-                                 rendered="#{UserHandle.disableEditSettings}"
-                                 action="#{UserHandle.setDisableEditSettings(false)}"/>
-                
-                <p:commandButton value="Cancel"
-                                 icon="pi pi-times"
-                                 class="margin-left-low ui-button-danger right-side"
-                                 rendered="#{!UserHandle.disableEditSettings}"
-                                 update="@form"
-                                 action="#{UserHandle.setDisableEditSettings(true)}" immediate="true"/>
+                </p:divider>       
+                <p:commandButton 
+                    class="right-side" value="Edit"
+                    icon="pi pi-file-edit"
+                    immediate="true"
+                    update="@form"
+                    rendered="#{UserHandle.disableEditSettings}"
+                    action="#{UserHandle.setDisableEditSettings(false)}"/>   
+
+                <p:commandButton 
+                    class="margin-left-low ui-button-danger right-side"
+                    value="Cancel"
+                    icon="pi pi-times"
+                    rendered="#{!UserHandle.disableEditSettings}"
+                    update="@form"
+                    action="#{UserHandle.setDisableEditSettings(true)}" 
+                    immediate="true"/>
                 
                 <p:panelGrid id="user-settings-panel" columns="3" class="padding-low" layout="flex" >
-                    
+
                     <p:outputLabel value="Username" />
-                        <p:inputText id="user-settings-username"
-                                     value="#{UserHandle.user.username}"
-                                 disabled="#{UserHandle.disableEditSettings}"
-                                 validator="#{UserValidator.validate}" 
-                                 required="true"
-                                 requiredMessage="Insert name"
-                                 autocomplete="on"
-                                 pt:placeholder="Enter username" />
-                         <p:message for="user-settings-username" class="error-messages"/>
+                    <p:inputText 
+                        id="user-settings-username"
+                        value="#{UserHandle.user.username}"
+                        disabled="#{UserHandle.disableEditSettings}"
+                        validator="#{UserValidator.validate}" 
+                        required="true"
+                        requiredMessage="Insert name"
+                        autocomplete="on"
+                        pt:placeholder="Enter username" />
+                    
+                    <p:message for="user-settings-username" class="error-messages"/>
 
                     <p:outputLabel value="Dob;" />
-                    <p:datePicker id="user-settings-date"
-                                  value="#{UserHandle.user.dob}"
-                                  disabled="#{UserHandle.disableEditSettings}"
-                                  monthNavigator="true"
-                                  yearNavigator="true"
-                                  maxdate="1-1-2015"
-                                  mindate="1-1-1924"
-                                  flex="true"
-                                  required="true"
-                                  autocomplete="on"
-                                  requiredMessage="Insert date"/>
+                    <p:datePicker 
+                        id="user-settings-date"
+                        value="#{UserHandle.user.dob}"
+                        disabled="#{UserHandle.disableEditSettings}"
+                        monthNavigator="true"
+                        yearNavigator="true"
+                        maxdate="1-1-2015"
+                        mindate="1-1-1924"
+                        flex="true"
+                        required="true"
+                        autocomplete="on"
+                        requiredMessage="Insert date"/>
+                    
                     <p:message for="user-settings-date" class="error-messages"/>
-                    
+
                     <p:outputLabel value="Email"/>
-                    <p:inputText id="user-settings-email" 
-                                 value="#{UserHandle.user.email}"
-                                 disabled="#{UserHandle.disableEditSettings}"
-                                 validator="#{UserValidator.validate}"
-                                 required="true"
-                                 requiredMessage="Insert email"
-                                 autocomplete="on"
-                                 pt:placeholder="Enter email"/>
+                    <p:inputText 
+                        id="user-settings-email" 
+                        value="#{UserHandle.user.email}"
+                        disabled="#{UserHandle.disableEditSettings}"
+                        validator="#{UserValidator.validate}"
+                        required="true"
+                        requiredMessage="Insert email"
+                        autocomplete="on"
+                        pt:placeholder="Enter email"/>
+                    
                     <p:message for="user-settings-email" class="error-messages"/>
-                    
+
                     <p:outputLabel value="Password" />
-                    <p:password id="user-settings-password" 
-                                class="text2xl"
-                                value="#{UserHandle.user.password}"
-                                disabled="#{UserHandle.disableEditSettings}"
-                                toggleMask="true" 
-                                redisplay="true" 
-                                required="true"
-                                requiredMessage="Insert password"
-                                placeholder="Enter password"/>
-                    <p:message for="user-settings-password" class="error-messages"/>
+                    <p:password 
+                        id="user-settings-password" 
+                        class="text2xl"
+                        value="#{UserHandle.user.password}"
+                        disabled="#{UserHandle.disableEditSettings}"
+                        toggleMask="true" 
+                        redisplay="true" 
+                        required="true"
+                        requiredMessage="Insert password"
+                        placeholder="Enter password"/>
                     
+                    <p:message for="user-settings-password" class="error-messages"/>
+
                     <p:outputLabel value="Type" />
                     <p:inputText value="#{UserHandle.user.role}"
                                  disabled="true"/>
                 </p:panelGrid>
-                
+
                 <div class="flex-display center-content margin-top-low">
-                        <div class="block-display">
-                            <p:commandButton icon="pi pi-check"
-                                         class="ui-button-success"
-                                         value="Save"
-                                         update="@form header-form"
-                                         disabled="#{UserHandle.disableEditSettings}"
-                                         action="#{UserHandle.updateUser()}"/>                           
-                        </div>
+                    <div class="block-display">
+                        <p:commandButton 
+                            class="ui-button-success"
+                            value="Save"
+                            icon="pi pi-check"
+                            update="@form header-form"
+                            disabled="#{UserHandle.disableEditSettings}"
+                            action="#{UserHandle.updateUser()}"/>                                                                  
                     </div>
-                    <div class="flex-display center-content margin-top-low">
-                        <p:commandButton class="ui-button-danger"
-                                         icon="pi pi-times"
-                                         disabled="#{!UserHandle.disableEditSettings}"
-                                         action="#{UserHandle.removeUser()}"
-                                         value="Remove Account">
-                            <p:confirm  header="Confirmation" message="Are you sure you want to remove your Account?" icon="pi pi-exclamation-triangle"/>
-                        </p:commandButton>
+                </div>
+                <div class="flex-display center-content margin-top-low">
+                    <p:commandButton 
+                        class="ui-button-danger"
+                        value="Remove Account"
+                        icon="pi pi-times"
+                        disabled="#{!UserHandle.disableEditSettings}"
+                        action="#{UserHandle.removeUser()}">
                         
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
-                        </p:confirmDialog> 
-                    </div>
+                        <p:confirm  header="Confirmation" message="Are you sure you want to remove your Account?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                    </p:confirmDialog> 
+                </div>
             </h:form>
         </div>
     </div>
-    
-    
-    
-    
 </ui:composition>

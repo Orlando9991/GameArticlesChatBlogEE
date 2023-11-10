@@ -24,6 +24,5 @@ public enum ESubject {
 
     public String getSubject(){
         return  this.subject;
-    }
-    
+    } 
 }

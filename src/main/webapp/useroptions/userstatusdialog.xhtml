@@ -3,18 +3,20 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:dialog id="user-status-dialog"
-              class="horizontal-center"
-              widgetVar="uStatusDlg"
-              height="auto"
-              dynamic="true"
-              responsive="true"
-              onShow="PF('uSettingsDlg').initPosition()"
-              fitViewport="true"
-              draggable="false"
-              showEffect="fade"
-              modal="true"
-              header="Status">
+    <p:dialog 
+        id="user-status-dialog"
+        class="horizontal-center"
+        widgetVar="uStatusDlg"
+        height="auto"
+        dynamic="true"
+        responsive="true"
+        onShow="PF('uSettingsDlg').initPosition()"
+        fitViewport="true"
+        draggable="false"
+        showEffect="fade"
+        modal="true"
+        header="Status">
+        
         <ui:include src="/useroptions/userstatus.xhtml"/>
     </p:dialog>
 </ui:composition>

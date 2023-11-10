@@ -46,8 +46,6 @@ function setCurrentTab(name){
             t.setIsVisible(false);
         }
     });
-
-
 }
 
 function setActiveRenderSubMenu(id){
@@ -71,20 +69,19 @@ function setActiveRenderSubMenu(id){
             setCurrentTab('contact-page');
             setHomeBackGroundOpc(true);
             break;
-        }
-            
+        }       
     }
-    return true;
+    resetHomeCharactersTop();
+    resetHomeTitleStyle();
+    resetScroll();
 }
-
 
 function setHomeBackGroundOpc(isSet){
     if(isSet){
         document.body.style.backgroundImage = "url(/GameBlog/javax.faces.resource/img/backgroung.jpg.xhtml)";
     }else{
         document.body.style.backgroundImage = "";
-    }
-    
+    }  
 }
 
 function setDisplay(id,typeDisplay){
@@ -104,37 +101,55 @@ function toggleSubmitLogin(){
 }
 
 document.addEventListener('scroll',()=>{
+    
     let home = document.getElementById("home-page");
     let initiate = document.getElementById("initiate");
-    resetHomeTitlesPos(initiate, title);
+    noOpacityStyle(initiate);
+    
     if(home.style.display !== 'none'){
-       
         let characters = document.getElementById("characters");
         let arrow = document.getElementById("arrow");
         let title = document.getElementById("title");
         let mario = document.getElementById("mario");
-        
+        let initiate = document.getElementById("initiate");
         let value = window.scrollY;
         
         title.style.top = value * 0.9 + "px";
         characters.style.top = value * -0.5 + "px";
         mario.style.top = value * -0.5 + "px";
         arrow.style.opacity = 1-(value * 0.003);
+        title.style.opacity = 1-(value * 0.003);
+        initiate.style.opacity = 0 + (value * 0.004);
         
-        if(value<200){
-            resetHomeTitlesPos(initiate, title);
-        }else if(value>=200){
-            title.textContent = "Welcome";
+        if(value>=200){
             arrow.style.opacity = 0;
-            initiate.classList.remove("hidden");
-        }
-        
+        }   
     }},{passive:true});
 
-function resetHomeTitlesPos(initiate, title){
-    if(!initiate.classList.contains("hidden")){
-        initiate.classList.add("hidden");
-    }
-    title.textContent = "GameBlog";
+function resetHomeTitleStyle(){
+    let title = document.getElementById("title");
+    resetTopPosition(title);
+    fullOpacityStyle(title);
 }
 
+function resetHomeCharactersTop(){
+     let characters = document.getElementById("characters");
+     let mario = document.getElementById("mario");
+     resetTopPosition(characters);
+     resetTopPosition(mario);
+}
+
+function resetTopPosition(element){
+    element.style.top = 0;
+}
+
+function fullOpacityStyle(element){
+    element.style.opacity = 1;
+}
+function noOpacityStyle(element){
+    element.style.opacity = 0;
+}
+
+function resetScroll() {
+  window.scrollTo(0, 0);
+}

@@ -7,8 +7,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : orlan
 */
 
-
-
 .parallax{
    position:relative;
    display:flex;
@@ -24,18 +22,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   pointer-events: none;
 }
 
+.parallax .initiate{
+    opacity: 0;
+}
+
 .parallax .title{
    position: absolute;
-   font-size: 5rem;
+   font-size: 6rem;
    text-align: justify;
    letter-spacing: 3px;
    color: white;
-   text-shadow: 0 1px 10px rgba(30,30,30,0.95);
-   top: 10%;
-   z-index: 20;
+   text-shadow: 4px 6px 10px rgba(255,255,255,1);
+   top: 0%;
+   z-index: 10;
 }
 
-.parallax img#characters, img#mario, img#floor{
+.parallax img#characters, img#mario{
+    z-index: 22;
+}
+
+.parallax img#floor{
     z-index: 19;
 }
 
@@ -77,7 +83,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .parallax #begin-form{
     position: absolute;
     bottom: 10%;
-    z-index: 21;
+    z-index: 19;
 }
 
 .parallax #initiate{
@@ -88,14 +94,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: white;
     font-size: 7rem;
     text-shadow: 0 6px 5px rgba(20,20,20,0.95);
-    transition: font-size;
-    transition-duration: 1s;
     text-decoration: none;
 }
 
 .parallax #initiate:hover{
     background-color: rgba(44,92,157,0.95);
-    font-size: 9rem;
 }
 
 .parallax img#arrow{

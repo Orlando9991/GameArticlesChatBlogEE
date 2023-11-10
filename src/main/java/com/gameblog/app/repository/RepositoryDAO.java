@@ -7,6 +7,7 @@ package com.gameblog.app.repository;
 import com.gameblog.app.utils.RepositoryException;
 import java.util.List;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.Valid;
 
 /**
@@ -14,7 +15,7 @@ import javax.validation.Valid;
  * @author orlan
  * @param <T>
  */
-
+@RequestScoped
 public interface RepositoryDAO <T> {
     void create(@Valid T obj) throws RepositoryException;
     void update(@Valid T obj) throws RepositoryException;

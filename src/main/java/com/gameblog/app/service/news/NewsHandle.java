@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.enterprise.event.Observes;
@@ -45,9 +47,8 @@ public class NewsHandle{
         refreshDayNews();
     }
     
-    public NewsHandle(){
-        
-    }
+    public NewsHandle(){}
+    
     //Update every day 0h
     @Schedule(dayOfWeek = "*", month = "*", hour = "0", dayOfMonth = "*", year = "*", minute = "*", second = "*", persistent = false)
     public void refreshDayNews(){
@@ -62,7 +63,7 @@ public class NewsHandle{
        updateView();
     }
     
-    
+    @Lock(LockType.READ)
     private void updateView(){
         generalViewTools.executePrimeFacesUpdate(":news-data");
     }

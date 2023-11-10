@@ -47,6 +47,4 @@ public enum EPostTab {
         }
         throw new RuntimeException("Error Post -- (Convert category name) Something went wrong");
     }
-    
-    
 }

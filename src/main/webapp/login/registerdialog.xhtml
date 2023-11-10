@@ -3,7 +3,18 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:dialog id="register-dialog" modal="true" header="Sign Up" widgetVar="signUpDlg" width="300" height="auto" dynamic="true" fitViewport="true" draggable="false" showEffect="fade">
+    <p:dialog 
+        id="register-dialog"
+        modal="true"
+        header="Sign Up"
+        widgetVar="signUpDlg"
+        width="300"
+        height="auto"
+        dynamic="true"
+        fitViewport="true"
+        draggable="false"
+        showEffect="fade">
+        
         <ui:include src="/login/register.xhtml"/>              
     </p:dialog>
 </ui:composition>

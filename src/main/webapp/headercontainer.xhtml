@@ -8,36 +8,32 @@
 
     <div class="header-container border-shadow">
         <h:form id="header-form">
-            
             <p:toolbar >
                 <p:toolbarGroup>
-                    <p:commandLink value="Home" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('home-page')"/>
-                    <p:commandLink value="Articles" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('articles-form')"/>
-                    <p:commandLink value="News" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('news-page')"/>
-                    <p:commandLink value="ContactUs" class="link-animate text3xl thicker-text margin-normal" onclick="javascript:setActiveRenderSubMenu('contact-page')"/>                  
+                    <p:commandLink class="link-animate text3xl thicker-text margin-normal" value="Home" onclick="javascript:setActiveRenderSubMenu('home-page')"/>
+                    <p:commandLink class="link-animate text3xl thicker-text margin-normal" value="Articles" onclick="javascript:setActiveRenderSubMenu('articles-form')"/>
+                    <p:commandLink class="link-animate text3xl thicker-text margin-normal" value="News" onclick="javascript:setActiveRenderSubMenu('news-page')"/>
+                    <p:commandLink class="link-animate text3xl thicker-text margin-normal" value="ContactUs" onclick="javascript:setActiveRenderSubMenu('contact-page')"/>                  
                 </p:toolbarGroup>
-                
                 <p:toolbarGroup align="right" rendered="#{!SessionHandle.logged}">
-                        <div class="login-container">
-                            <p:commandButton  id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat"  onclick="PF('signInDlg').show();"/>  
-                            <p:commandButton  id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
-                        </div>
+                    <div class="login-container">
+                        <p:commandButton id="sign-in-button" value="Sign In" class="sign-in-button ui-button-raised ui-button-secondary ui-button-flat" onclick="PF('signInDlg').show();"/>  
+                        <p:commandButton id="sign-up-button" value="Sign Up" class="sign-up-button ui-button-raised" onclick="PF('signUpDlg').show();" />
+                    </div>
                 </p:toolbarGroup>
-                
                 <p:toolbarGroup align="right" rendered="#{SessionHandle.logged}">            
                     <div class="user-panel">
-                        <p:avatar icon="pi pi-user" label="#{SessionHandle.userName}"  styleClass="mr-2 avatar"  shape="circle" />
+                        <p:avatar icon="pi pi-user" label="#{SessionHandle.userName}" styleClass="mr-2 avatar" shape="circle" />
                         <p:badge class="user-badge" value="#{SessionHandle.userName}" size="xlarge"  />
                         <p:menuButton value="Options" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
-                            <p:menuitem value="Settings"  icon="pi pi-cog" onclick="PF('uSettingsDlg').show();"/>
-                            <p:menuitem value="Status"  icon="pi pi-briefcase" onclick="PF('uStatusDlg').show();"/>
+                            <p:menuitem value="Settings" icon="pi pi-cog" onclick="PF('uSettingsDlg').show();"/>
+                            <p:menuitem value="Status" icon="pi pi-briefcase" onclick="PF('uStatusDlg').show();"/>
                             <p:divider/>
-                            <p:menuitem value="logout"  icon="pi pi-sign-out" action="#{GeneralViewTools.redirectPage('/GameBlog/logout')}">
+                            <p:menuitem value="logout" icon="pi pi-sign-out" action="#{GeneralViewTools.redirectPage('/GameBlog/logout')}">
                                 <p:confirm header="Confirmation" message="Are you sure you want to logout?" icon="pi pi-exclamation-triangle"/>
                             </p:menuitem>
                         </p:menuButton>
                     </div>
-                    
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />

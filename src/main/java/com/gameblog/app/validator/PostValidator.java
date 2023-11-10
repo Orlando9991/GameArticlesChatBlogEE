@@ -44,6 +44,4 @@ public class PostValidator implements DataBaseFindValidator{
 
         return postCount > 0;
     }
-
-    
 }
